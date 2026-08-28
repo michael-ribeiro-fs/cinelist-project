@@ -1,79 +1,147 @@
-import { useEffect, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import './Header.css';
 
-function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+type HeaderProps = {
+  onSearch?: (searchTerm: string) => void;
+};
 
-  const menuLinks = (
-    <nav className="nav_bar">
-      <a href="#" className="nav_links">
-        Movies
-      </a>
-      <a href="#" className="nav_links">
-        TV Shows
-      </a>
-      <a href="#" className="nav_links">
-        Suggest me
-      </a>
-    </nav>
-  );
+function Header({ onSearch }: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    function handleResize() {
-      setIsDesktop(window.innerWidth >= 768);
-    }
+  const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedSearch = searchTerm.trim();
+    if (!normalizedSearch) return;
+    onSearch?.(normalizedSearch);
+  };
 
-    window.addEventListener('resize', handleResize);
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const handleMenuToggle = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setMenuOpen(false);
-      }
-    }
-
-    function handleClickOutside(event: MouseEvent) {
-      const target = event.target as HTMLElement;
-
-      if (!target.closest('.header')) {
-        setMenuOpen(false);
-      }
-    }
-
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.removeEventListener('click', handleClickOutside);
-    };
-  });
+  const handleMenuClose = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
-    <>
-      <header className="header">
-        <img className="header_image" src="src/assets/icon.png" alt="icon" />
+    <header className="header">
+      <div className="header__container">
+        {/* Substituído <a> por <Link> */}
+        <Link className="header__brand" to="/" aria-label="MovieList - Página inicial">
+          <span className="header__brand-mark" />
+          <span className="header__brand-text">MovieList</span>
+        </Link>
+
         <button
-          className={`menu-button ${menuOpen ? 'menu-button--open' : ''}`}
+          className="header__menu-button"
           type="button"
-          onClick={() => {
-            setMenuOpen(!menuOpen);
-          }}
+          aria-label="Abrir menu"
+          aria-expanded={isMenuOpen}
+          onClick={handleMenuToggle}
         >
-          <span>—</span>
-          <span>—</span>
-          <span>—</span>
+          <span className="header__menu-line" />
+          <span className="header__menu-line" />
+          <span className="header__menu-line" />
         </button>
-        {isDesktop && menuLinks}
-        {menuOpen && menuLinks}
-      </header>
-    </>
+
+        <nav
+          className={`header__navigation ${isMenuOpen ? 'header__navigation--open' : ''}`}
+          aria-label="Navegação principal"
+        >
+          <ul className="header__menu">
+            <li className="header__menu-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `header__menu-link ${isActive ? 'header__menu-link--active' : ''}`
+                }
+                to="/"
+                onClick={handleMenuClose}
+                end
+              >
+                Home
+              </NavLink>
+            </li>
+            <li className="header__menu-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `header__menu-link ${isActive ? 'header__menu-link--active' : ''}`
+                }
+                to="/movies"
+                onClick={handleMenuClose}
+              >
+                Filmes
+              </NavLink>
+            </li>
+            <li className="header__menu-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `header__menu-link ${isActive ? 'header__menu-link--active' : ''}`
+                }
+                to="/series"
+                onClick={handleMenuClose}
+              >
+                Séries
+              </NavLink>
+            </li>
+            <li className="header__menu-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `header__menu-link ${isActive ? 'header__menu-link--active' : ''}`
+                }
+                to="/favorites"
+                onClick={handleMenuClose}
+              >
+                Favoritos
+              </NavLink>
+            </li>
+            <li className="header__menu-item">
+              <NavLink
+                className={({ isActive }) =>
+                  `header__menu-link ${isActive ? 'header__menu-link--active' : ''}`
+                }
+                to="/about"
+                onClick={handleMenuClose}
+              >
+                Sobre
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="header__actions">
+          <form className="header__search" onSubmit={handleSearchSubmit} role="search">
+            <input
+              className="header__search-input"
+              type="search"
+              placeholder="Pesquisar..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+              aria-label="Pesquisar filmes"
+            />
+            <button className="header__search-button" type="submit" aria-label="Pesquisar">
+              <svg className="header__search-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="6" />
+                <path d="M16 16L21 21" />
+              </svg>
+            </button>
+          </form>
+
+          {/* Botões de login/signup podem continuar como <a> se não tiverem rotas próprias */}
+          <a className="header__login-button" href="#login">
+            Entrar
+          </a>
+          <a className="header__signup-button" href="#signup">
+            Criar conta
+          </a>
+        </div>
+      </div>
+    </header>
   );
 }
 

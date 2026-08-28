@@ -1,0 +1,7 @@
+.page-container {
+  padding-top: 92px;
+  color: white;
+  text-align: center;
+  min-height: 100vh;
+  background-color: #121829; /* mesma cor do fundo da página */
+}

@@ -1,19 +1,103 @@
+import { moviesData } from '../../data/movies';
+import { useCarousel } from '../../hooks/useCarousel';
+import HeroControls from '../HeroControls/HeroControls';
 import './Hero.css';
 
+const AUTOPLAY_INTERVAL = 60000;
+
 function Hero() {
+  const movies = moviesData.movies;
+  const total = movies.length;
+
+  const { currentIndex, goTo, next, prev, setIsPaused } = useCarousel({
+    total,
+    interval: AUTOPLAY_INTERVAL,
+    autoPlay: true,
+  });
+
+  const activeMovie = movies[currentIndex];
+
+  // Pausar autoplay no hover/foco
+  const handlePause = () => setIsPaused(true);
+  const handleResume = () => setIsPaused(false);
+
+  // Suporte a teclado (setas)
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      prev();
+    } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      next();
+    }
+  };
+
   return (
-    <>
-      <div className="hero">
-        <div className="hero_circle"></div>
-        <img className="hero_image" src="./src/assets/family-cinema.png" alt=""></img>
-        <h1 className="hero_title">CineList</h1>
-        <p className="hero_description">
-          Explore filmes e séries,
-          <span> CineList</span> ajuda você a descobrir, organizar e acompanhar seus títulos
-          favoritos. Encontre sua próxima história para assistir. 🎬
-        </p>
+    <section
+      className="hero"
+      id="home"
+      aria-roledescription="carousel"
+      aria-label="Filmes em destaque"
+      onMouseEnter={handlePause}
+      onMouseLeave={handleResume}
+      onFocus={handlePause}
+      onBlur={handleResume}
+      onKeyDown={handleKeyDown}
+      tabIndex={0} // para receber foco e capturar teclas
+    >
+      <div className="hero__background">
+        <img className="hero__background-image" src={activeMovie.image} alt="" />
       </div>
-    </>
+
+      <div className="hero__overlay" />
+
+      <div className="hero__container">
+        <div className="hero__content" aria-live="polite" aria-atomic="true">
+          <p className="hero__eyebrow">FILME EM DESTAQUE</p>
+
+          <h1 className="hero__title">
+            {activeMovie.title} <span className="hero__year">{activeMovie.year}</span>
+          </h1>
+
+          <div className="hero__separator" />
+
+          <h2 className="hero__subtitle">Sinopse</h2>
+
+          <p className="hero__description">{activeMovie.description}</p>
+
+          <div className="hero__genre">
+            <span className="hero__genre-label">Gênero</span>
+            <span className="hero__genre-value">{activeMovie.genre}</span>
+          </div>
+
+          <div className="hero__meta">
+            <div className="hero__rating">
+              <span className="hero__rating-value">★ {activeMovie.rating.toFixed(1)}/10</span>
+            </div>
+            <span className="hero__meta-divider" />
+            <div className="hero__duration">
+              <span className="hero__duration-value">⏱ {activeMovie.duration}</span>
+            </div>
+          </div>
+
+          <button className="hero__cta" type="button">
+            Assistir agora
+          </button>
+        </div>
+      </div>
+
+      <HeroControls
+        movies={movies}
+        currentIndex={currentIndex}
+        onNext={next}
+        onPrev={prev}
+        onGoTo={goTo}
+      />
+
+      <div className="hero__progress">
+        <span key={activeMovie.id} className="hero__progress-bar" />
+      </div>
+    </section>
   );
 }
 
