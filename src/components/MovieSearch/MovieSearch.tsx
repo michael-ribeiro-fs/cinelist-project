@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import './MovieSearch.css';
 
 type SearchFilters = {
@@ -38,6 +39,7 @@ const initialFilters: SearchFilters = {
 };
 
 function MovieSearch({ onSearch }: MovieSearchProps) {
+  const { t } = useLanguage(); // <-- contexto de tradução
   const [searchTerm, setSearchTerm] = useState('');
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(true);
   const [filters, setFilters] = useState<SearchFilters>(initialFilters);
@@ -48,7 +50,6 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = event.target;
-
     const checked = type === 'checkbox' ? (event.target as HTMLInputElement).checked : false;
 
     setFilters((previousFilters) => ({
@@ -59,7 +60,6 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
   const handleSearch = () => {
     onSearch?.(searchTerm.trim(), filters);
-
     console.log({
       searchTerm: searchTerm.trim(),
       filters,
@@ -83,7 +83,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
           <div className="movie-search__basic">
             <div className="movie-search__basic-content">
-              <h2 className="movie-search__basic-title">Busca simples de filmes e séries</h2>
+              <h2 className="movie-search__basic-title">{t.movieSearch.simpleTitle}</h2>
 
               <div className="movie-search__basic-input-wrapper">
                 <input
@@ -91,25 +91,24 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                   type="search"
                   value={searchTerm}
                   onChange={handleSearchTermChange}
-                  placeholder="Pesquise por nome de filme ou série"
-                  aria-label="Pesquisar filmes e séries"
+                  placeholder={t.movieSearch.simplePlaceholder}
+                  aria-label={t.movieSearch.simplePlaceholder}
                 />
 
                 <button
                   className="movie-search__basic-icon-button"
                   type="submit"
-                  aria-label="Pesquisar"
+                  aria-label={t.movieSearch.searchButton}
                 >
                   <svg className="movie-search__search-icon" viewBox="0 0 24 24" aria-hidden="true">
                     <circle className="movie-search__search-icon-circle" cx="11" cy="11" r="6" />
-
                     <path className="movie-search__search-icon-line" d="M16 16L21 21" />
                   </svg>
                 </button>
               </div>
 
               <button className="movie-search__basic-button" type="submit">
-                Buscar
+                {t.movieSearch.searchButton}
               </button>
             </div>
           </div>
@@ -136,9 +135,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                 </svg>
               </span>
 
-              <span className="movie-search__advanced-title">
-                Busca avançada de filmes e séries
-              </span>
+              <span className="movie-search__advanced-title">{t.movieSearch.advancedTitle}</span>
             </button>
 
             {/* ADVANCED FILTERS */}
@@ -154,7 +151,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="type">
-                    Tipo
+                    {t.movieSearch.filters.type}
                   </label>
 
                   <select
@@ -164,9 +161,9 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     value={filters.type}
                     onChange={handleFilterChange}
                   >
-                    <option value="">Todos</option>
-                    <option value="movie">Filmes</option>
-                    <option value="series">Séries</option>
+                    <option value="">{t.movieSearch.filters.all}</option>
+                    <option value="movie">{t.movieSearch.filters.movies}</option>
+                    <option value="series">{t.movieSearch.filters.series}</option>
                   </select>
                 </div>
 
@@ -174,7 +171,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="country">
-                    País
+                    {t.movieSearch.filters.country}
                   </label>
 
                   <select
@@ -184,7 +181,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     value={filters.country}
                     onChange={handleFilterChange}
                   >
-                    <option value="">Todos</option>
+                    <option value="">{t.movieSearch.filters.allCountries}</option>
                     <option value="br">Brasil</option>
                     <option value="us">Estados Unidos</option>
                     <option value="uk">Reino Unido</option>
@@ -197,7 +194,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="genre">
-                    Gênero
+                    {t.movieSearch.filters.genre}
                   </label>
 
                   <select
@@ -207,7 +204,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     value={filters.genre}
                     onChange={handleFilterChange}
                   >
-                    <option value="">Todos</option>
+                    <option value="">{t.movieSearch.filters.allGenres}</option>
                     <option value="action">Ação</option>
                     <option value="comedy">Comédia</option>
                     <option value="drama">Drama</option>
@@ -219,81 +216,73 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 {/* YEAR */}
 
-                <div className="movie-search__field">
-                  <label className="movie-search__label" htmlFor="yearFrom">
-                    Ano de lançamento
-                  </label>
+                <label className="movie-search__label" htmlFor="yearFrom">
+                  {t.movieSearch.filters.yearLabel}
+                </label>
 
-                  <div className="movie-search__range">
-                    <input
-                      className="movie-search__range-input"
-                      id="yearFrom"
-                      name="yearFrom"
-                      type="number"
-                      min="1900"
-                      max="2100"
-                      placeholder="De"
-                      value={filters.yearFrom}
-                      onChange={handleFilterChange}
-                    />
-
-                    <span className="movie-search__range-divider">até</span>
-
-                    <input
-                      className="movie-search__range-input"
-                      name="yearTo"
-                      type="number"
-                      min="1900"
-                      max="2100"
-                      placeholder="Até"
-                      value={filters.yearTo}
-                      onChange={handleFilterChange}
-                    />
-                  </div>
+                <div className="movie-search__range">
+                  <input
+                    className="movie-search__range-input"
+                    id="yearFrom"
+                    name="yearFrom"
+                    type="number"
+                    min="1900"
+                    max="2100"
+                    placeholder={t.movieSearch.filters.yearFrom}
+                    value={filters.yearFrom}
+                    onChange={handleFilterChange}
+                  />
+                  <span className="movie-search__range-divider">{t.movieSearch.filters.to}</span>
+                  <input
+                    className="movie-search__range-input"
+                    name="yearTo"
+                    type="number"
+                    min="1900"
+                    max="2100"
+                    placeholder={t.movieSearch.filters.yearTo}
+                    value={filters.yearTo}
+                    onChange={handleFilterChange}
+                  />
                 </div>
 
                 {/* RATING */}
 
-                <div className="movie-search__field">
-                  <label className="movie-search__label" htmlFor="ratingFrom">
-                    Nota IMDb
-                  </label>
+                <label className="movie-search__label" htmlFor="ratingFrom">
+                  {t.movieSearch.filters.ratingLabel}
+                </label>
 
-                  <div className="movie-search__range">
-                    <input
-                      className="movie-search__range-input"
-                      id="ratingFrom"
-                      name="ratingFrom"
-                      type="number"
-                      min="0"
-                      max="10"
-                      step="0.1"
-                      placeholder="De"
-                      value={filters.ratingFrom}
-                      onChange={handleFilterChange}
-                    />
-
-                    <span className="movie-search__range-divider">até</span>
-
-                    <input
-                      className="movie-search__range-input"
-                      name="ratingTo"
-                      type="number"
-                      min="0"
-                      max="10"
-                      step="0.1"
-                      placeholder="Até"
-                      value={filters.ratingTo}
-                      onChange={handleFilterChange}
-                    />
-                  </div>
+                <div className="movie-search__range">
+                  <input
+                    className="movie-search__range-input"
+                    id="ratingFrom"
+                    name="ratingFrom"
+                    type="number"
+                    min="0"
+                    max="10"
+                    step="0.1"
+                    placeholder={t.movieSearch.filters.ratingFrom}
+                    value={filters.ratingFrom}
+                    onChange={handleFilterChange}
+                  />
+                  <span className="movie-search__range-divider">{t.movieSearch.filters.to}</span>
+                  <input
+                    className="movie-search__range-input"
+                    name="ratingTo"
+                    type="number"
+                    min="0"
+                    max="10"
+                    step="0.1"
+                    placeholder={t.movieSearch.filters.ratingTo}
+                    value={filters.ratingTo}
+                    onChange={handleFilterChange}
+                  />
                 </div>
 
                 {/* AGE RATING */}
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="ageRating">
-                    Classificação
+                    {t.movieSearch.filters.ageRating}
                   </label>
 
                   <select
@@ -303,8 +292,8 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     value={filters.ageRating}
                     onChange={handleFilterChange}
                   >
-                    <option value="">Todas</option>
-                    <option value="l">Livre</option>
+                    <option value="">{t.movieSearch.filters.allAges}</option>
+                    <option value="l">{t.movieSearch.filters.free}</option>
                     <option value="10">10 anos</option>
                     <option value="12">12 anos</option>
                     <option value="14">14 anos</option>
@@ -317,7 +306,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="actor">
-                    Ator ou atriz
+                    {t.movieSearch.filters.actor}
                   </label>
 
                   <input
@@ -325,7 +314,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     id="actor"
                     name="actor"
                     type="text"
-                    placeholder="Ex.: Brad Pitt"
+                    placeholder={t.movieSearch.filters.actorPlaceholder}
                     value={filters.actor}
                     onChange={handleFilterChange}
                   />
@@ -335,7 +324,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="director">
-                    Diretor(a)
+                    {t.movieSearch.filters.director}
                   </label>
 
                   <input
@@ -343,7 +332,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     id="director"
                     name="director"
                     type="text"
-                    placeholder="Ex.: Christopher Nolan"
+                    placeholder={t.movieSearch.filters.directorPlaceholder}
                     value={filters.director}
                     onChange={handleFilterChange}
                   />
@@ -353,7 +342,7 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
 
                 <div className="movie-search__field">
                   <label className="movie-search__label" htmlFor="sortBy">
-                    Ordenar por
+                    {t.movieSearch.filters.sortBy}
                   </label>
 
                   <select
@@ -363,10 +352,10 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     value={filters.sortBy}
                     onChange={handleFilterChange}
                   >
-                    <option value="">Mais relevantes</option>
-                    <option value="rating">Maior nota IMDb</option>
-                    <option value="year">Mais recentes</option>
-                    <option value="title">Nome</option>
+                    <option value="">{t.movieSearch.filters.mostRelevant}</option>
+                    <option value="rating">{t.movieSearch.filters.highestRating}</option>
+                    <option value="year">{t.movieSearch.filters.newest}</option>
+                    <option value="title">{t.movieSearch.filters.name}</option>
                   </select>
                 </div>
               </div>
@@ -382,10 +371,10 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     checked={filters.dubbed}
                     onChange={handleFilterChange}
                   />
-
                   <span className="movie-search__checkbox-control" />
-
-                  <span className="movie-search__checkbox-text">Dublado</span>
+                  <span className="movie-search__checkbox-text">
+                    {t.movieSearch.filters.dubbed}
+                  </span>
                 </label>
 
                 <label className="movie-search__checkbox">
@@ -396,14 +385,14 @@ function MovieSearch({ onSearch }: MovieSearchProps) {
                     checked={filters.subtitled}
                     onChange={handleFilterChange}
                   />
-
                   <span className="movie-search__checkbox-control" />
-
-                  <span className="movie-search__checkbox-text">Legendado</span>
+                  <span className="movie-search__checkbox-text">
+                    {t.movieSearch.filters.subtitled}
+                  </span>
                 </label>
 
                 <button className="movie-search__filter-button" type="submit">
-                  Aplicar filtros e buscar
+                  {t.movieSearch.filters.applyFilters}
                 </button>
               </div>
             </div>

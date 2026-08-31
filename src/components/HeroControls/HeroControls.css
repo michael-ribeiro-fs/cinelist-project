@@ -1,0 +1,103 @@
+/* ============================================
+   CONTROLES DO CARROSSEL (HERO CONTROLS)
+============================================ */
+
+.hero__controls {
+  position: absolute;
+  bottom: 2.25rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transform: translateX(-50%);
+}
+
+.hero__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%;
+  background-color: rgba(20, 20, 20, 0.72);
+  color: #ffffff;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.hero__arrow:hover {
+  border-color: rgba(223, 33, 68, 0.6);
+  background-color: #df2144;
+  transform: scale(1.05);
+}
+
+.hero__arrow-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.hero__indicators {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.hero__indicator {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.hero__indicator:hover {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.hero__indicator--active {
+  background-color: #df2144;
+  box-shadow: 0 0 14px rgba(223, 33, 68, 0.8);
+  transform: scale(1.35);
+}
+
+/* ============================================
+   RESPONSIVIDADE
+============================================ */
+
+@media (max-width: 480px) {
+  .hero__controls {
+    bottom: 1.75rem;
+    gap: 0.65rem;
+  }
+
+  .hero__arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .hero__indicator {
+    width: 8px;
+    height: 8px;
+  }
+
+  .hero__indicators {
+    gap: 0.5rem;
+  }
+}

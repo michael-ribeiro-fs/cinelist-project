@@ -1,11 +1,13 @@
 import { moviesData } from '../../data/movies';
 import { useCarousel } from '../../hooks/useCarousel';
+import { useLanguage } from '../../context/LanguageContext';
 import HeroControls from '../HeroControls/HeroControls';
 import './Hero.css';
 
 const AUTOPLAY_INTERVAL = 60000;
 
 function Hero() {
+  const { t } = useLanguage(); // <-- contexto de tradução
   const movies = moviesData.movies;
   const total = movies.length;
 
@@ -43,7 +45,7 @@ function Hero() {
       onFocus={handlePause}
       onBlur={handleResume}
       onKeyDown={handleKeyDown}
-      tabIndex={0} // para receber foco e capturar teclas
+      tabIndex={0}
     >
       <div className="hero__background">
         <img className="hero__background-image" src={activeMovie.image} alt="" />
@@ -53,7 +55,7 @@ function Hero() {
 
       <div className="hero__container">
         <div className="hero__content" aria-live="polite" aria-atomic="true">
-          <p className="hero__eyebrow">FILME EM DESTAQUE</p>
+          <p className="hero__eyebrow">{t.hero.eyebrow}</p>
 
           <h1 className="hero__title">
             {activeMovie.title} <span className="hero__year">{activeMovie.year}</span>
@@ -61,12 +63,12 @@ function Hero() {
 
           <div className="hero__separator" />
 
-          <h2 className="hero__subtitle">Sinopse</h2>
+          <h2 className="hero__subtitle">{t.hero.synopsis}</h2>
 
           <p className="hero__description">{activeMovie.description}</p>
 
           <div className="hero__genre">
-            <span className="hero__genre-label">Gênero</span>
+            <span className="hero__genre-label">{t.hero.genre}</span>
             <span className="hero__genre-value">{activeMovie.genre}</span>
           </div>
 
@@ -81,7 +83,7 @@ function Hero() {
           </div>
 
           <button className="hero__cta" type="button">
-            Assistir agora
+            {t.hero.watchNow}
           </button>
         </div>
       </div>
@@ -92,6 +94,7 @@ function Hero() {
         onNext={next}
         onPrev={prev}
         onGoTo={goTo}
+        t={t} // <-- passa as traduções para os controles
       />
 
       <div className="hero__progress">

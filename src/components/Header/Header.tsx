@@ -1,14 +1,53 @@
 import { Link, NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { useLanguage } from '../../context/LanguageContext';
 import './Header.css';
 
 type HeaderProps = {
   onSearch?: (searchTerm: string) => void;
 };
 
+// Lista de idiomas disponíveis (mantida fora do componente)
+const LANGUAGES = [
+  { code: 'pt', label: 'Português', flag: '🇧🇷' },
+  { code: 'en', label: 'English', flag: '🇺🇸' },
+  { code: 'es', label: 'Español', flag: '🇪🇸' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
+  { code: 'zh', label: '中文', flag: '🇨🇳' },
+  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
+  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
+  { code: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
+];
+
 function Header({ onSearch }: HeaderProps) {
+  // Usar o contexto de idioma
+  const { language, setLanguage, t } = useLanguage();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+
+  const languageWrapperRef = useRef<HTMLDivElement>(null);
+
+  // Fechar o menu ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        languageWrapperRef.current &&
+        !languageWrapperRef.current.contains(event.target as Node)
+      ) {
+        setIsLanguageMenuOpen(false);
+      }
+    };
+
+    if (isLanguageMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isLanguageMenuOpen]);
 
   const handleSearchSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -29,13 +68,27 @@ function Header({ onSearch }: HeaderProps) {
     setIsMenuOpen(false);
   };
 
+  const handleLanguageToggle = () => {
+    setIsLanguageMenuOpen((prev) => !prev);
+  };
+
+  const handleLanguageSelect = (code: string) => {
+    setLanguage(code as any); // atualiza o idioma no contexto
+    setIsLanguageMenuOpen(false);
+    console.log(`Idioma alterado para: ${code}`);
+  };
+
+  // Fechar ao tirar o mouse
+  const handleMouseLeave = () => {
+    setIsLanguageMenuOpen(false);
+  };
+
   return (
     <header className="header">
       <div className="header__container">
-        {/* Substituído <a> por <Link> */}
         <Link className="header__brand" to="/" aria-label="MovieList - Página inicial">
           <span className="header__brand-mark" />
-          <span className="header__brand-text">MovieList</span>
+          <span className="header__brand-text">{t.header.brand}</span>
         </Link>
 
         <button
@@ -64,7 +117,7 @@ function Header({ onSearch }: HeaderProps) {
                 onClick={handleMenuClose}
                 end
               >
-                Home
+                {t.header.menu.home}
               </NavLink>
             </li>
             <li className="header__menu-item">
@@ -75,7 +128,7 @@ function Header({ onSearch }: HeaderProps) {
                 to="/movies"
                 onClick={handleMenuClose}
               >
-                Filmes
+                {t.header.menu.movies}
               </NavLink>
             </li>
             <li className="header__menu-item">
@@ -86,7 +139,7 @@ function Header({ onSearch }: HeaderProps) {
                 to="/series"
                 onClick={handleMenuClose}
               >
-                Séries
+                {t.header.menu.series}
               </NavLink>
             </li>
             <li className="header__menu-item">
@@ -97,7 +150,7 @@ function Header({ onSearch }: HeaderProps) {
                 to="/favorites"
                 onClick={handleMenuClose}
               >
-                Favoritos
+                {t.header.menu.favorites}
               </NavLink>
             </li>
             <li className="header__menu-item">
@@ -108,7 +161,7 @@ function Header({ onSearch }: HeaderProps) {
                 to="/about"
                 onClick={handleMenuClose}
               >
-                Sobre
+                {t.header.menu.about}
               </NavLink>
             </li>
           </ul>
@@ -119,10 +172,10 @@ function Header({ onSearch }: HeaderProps) {
             <input
               className="header__search-input"
               type="search"
-              placeholder="Pesquisar..."
+              placeholder={t.header.searchPlaceholder}
               value={searchTerm}
               onChange={handleSearchChange}
-              aria-label="Pesquisar filmes"
+              aria-label={t.header.searchPlaceholder}
             />
             <button className="header__search-button" type="submit" aria-label="Pesquisar">
               <svg className="header__search-icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -132,13 +185,50 @@ function Header({ onSearch }: HeaderProps) {
             </button>
           </form>
 
-          {/* Botões de login/signup podem continuar como <a> se não tiverem rotas próprias */}
           <a className="header__login-button" href="#login">
-            Entrar
+            {t.header.login}
           </a>
           <a className="header__signup-button" href="#signup">
-            Criar conta
+            {t.header.signup}
           </a>
+
+          {/* Container do idioma com ref e onMouseLeave */}
+          <div
+            className="header__language-wrapper"
+            ref={languageWrapperRef}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button
+              className="header__language-button"
+              type="button"
+              aria-label="Selecionar idioma"
+              aria-expanded={isLanguageMenuOpen}
+              onClick={handleLanguageToggle}
+            >
+              <span className="header__language-icon">🌐</span>
+            </button>
+
+            {isLanguageMenuOpen && (
+              <div className="header__language-dropdown">
+                <ul className="header__language-list">
+                  {LANGUAGES.map((lang) => (
+                    <li key={lang.code} className="header__language-item">
+                      <button
+                        className={`header__language-option ${
+                          language === lang.code ? 'header__language-option--active' : ''
+                        }`}
+                        type="button"
+                        onClick={() => handleLanguageSelect(lang.code)}
+                      >
+                        <span className="header__language-flag">{lang.flag}</span>
+                        <span className="header__language-label">{lang.label}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>

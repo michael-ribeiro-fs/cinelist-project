@@ -62,7 +62,7 @@
 
 .hero__eyebrow {
   margin: 0 0 0.9rem;
-  color: #e91e3f;
+  color: #df2144;
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.18em;
@@ -85,7 +85,7 @@
   width: 48px;
   height: 3px;
   margin: 1.25rem 0 1.4rem auto;
-  background-color: #e91e3f;
+  background-color: #df2144;
 }
 
 .hero__subtitle {
@@ -178,18 +178,19 @@
 
 .hero__cta {
   display: inline-flex;
+  border-radius: 2px;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
   min-width: 230px;
   min-height: 48px;
   padding: 0 1.5rem;
-  background-color: #e91e3f;
+  background-color: #df2144;
   color: #ffffff;
   font-size: 0.85rem;
   font-weight: 800;
   text-decoration: none;
-  box-shadow: 0 16px 35px rgba(233, 30, 63, 0.24);
+  box-shadow: 0 16px 35px rgba(223, 33, 68, 0.24);
   transition:
     background-color 0.2s ease,
     transform 0.2s ease,
@@ -197,8 +198,8 @@
 }
 
 .hero__cta:hover {
-  background-color: #f42b4b;
-  box-shadow: 0 20px 42px rgba(233, 30, 63, 0.32);
+  background-color: #c91e3d;
+  box-shadow: 0 20px 42px rgba(223, 33, 68, 0.32);
   transform: translateY(-2px);
 }
 
@@ -210,81 +211,6 @@
 
 .hero__cta-text {
   display: inline-block;
-}
-
-.hero__controls {
-  position: absolute;
-  bottom: 2.25rem;
-  left: 50%;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transform: translateX(-50%);
-}
-
-.hero__arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 50%;
-  background-color: rgba(20, 20, 20, 0.72);
-  color: #ffffff;
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease;
-}
-
-.hero__arrow:hover {
-  border-color: rgba(233, 30, 63, 0.6);
-  background-color: #e91e3f;
-  transform: scale(1.05);
-}
-
-.hero__arrow-icon {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 2;
-}
-
-.hero__indicators {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-}
-
-.hero__indicator {
-  width: 10px;
-  height: 10px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.55);
-  cursor: pointer;
-  transition:
-    background-color 0.25s ease,
-    transform 0.25s ease,
-    box-shadow 0.25s ease;
-}
-
-.hero__indicator:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-}
-
-.hero__indicator--active {
-  background-color: #e91e3f;
-  box-shadow: 0 0 14px rgba(233, 30, 63, 0.8);
-  transform: scale(1.35);
 }
 
 .hero__progress {
@@ -301,7 +227,7 @@
   display: block;
   width: 0;
   height: 100%;
-  background-color: #e91e3f;
+  background-color: #df2144;
   animation: hero-progress 60s linear forwards;
 }
 
@@ -313,7 +239,6 @@
   from {
     transform: scale(1);
   }
-
   to {
     transform: scale(1.06);
   }
@@ -324,7 +249,6 @@
     opacity: 0;
     transform: translateX(25px);
   }
-
   to {
     opacity: 1;
     transform: translateX(0);
@@ -335,7 +259,6 @@
   from {
     width: 0;
   }
-
   to {
     width: 100%;
   }
@@ -349,11 +272,9 @@
   .hero {
     min-height: 680px;
   }
-
   .hero__container {
     padding-top: 8rem;
   }
-
   .hero__overlay {
     background:
       linear-gradient(
@@ -380,11 +301,9 @@
     min-height: 760px;
     align-items: flex-end;
   }
-
   .hero__background-image {
     object-position: center top;
   }
-
   .hero__overlay {
     background:
       linear-gradient(90deg, rgba(5, 5, 5, 0.82) 0%, rgba(5, 5, 5, 0.6) 100%),
@@ -395,32 +314,26 @@
         rgba(5, 5, 5, 0.98) 100%
       );
   }
-
   .hero__container {
     justify-content: center;
     width: min(100% - 2rem, 600px);
     padding-top: 10rem;
     padding-bottom: 8.5rem;
   }
-
   .hero__content {
     text-align: center;
   }
-
   .hero__separator {
     margin-right: auto;
     margin-left: auto;
   }
-
   .hero__description {
     margin-right: auto;
     margin-left: auto;
   }
-
   .hero__meta {
     justify-content: center;
   }
-
   .hero__cta {
     width: min(100%, 360px);
   }
@@ -430,37 +343,15 @@
   .hero {
     min-height: 700px;
   }
-
   .hero__container {
     width: min(100% - 1.5rem, 600px);
     padding-bottom: 7.5rem;
   }
-
   .hero__eyebrow {
     font-size: 0.65rem;
   }
-
   .hero__description {
     font-size: 0.8rem;
     line-height: 1.75;
-  }
-
-  .hero__controls {
-    bottom: 1.75rem;
-    gap: 0.65rem;
-  }
-
-  .hero__arrow {
-    width: 38px;
-    height: 38px;
-  }
-
-  .hero__indicator {
-    width: 8px;
-    height: 8px;
-  }
-
-  .hero__indicators {
-    gap: 0.5rem;
   }
 }
