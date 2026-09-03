@@ -1,30 +1,26 @@
+// src/context/LanguageContext.tsx
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { LANGUAGES, type LanguageCode } from '../constants/languages';
 import { header } from '../locales/header/header';
 import { hero } from '../locales/hero/hero';
 import { movieSearch } from '../locales/movieSearch/movieSearch';
+// import { pages } from '../locales/pages/pages'; // quando criar
 
-type LanguageCode = 'pt' | 'en' | 'es' | 'fr' | 'zh' | 'ar' | 'ru' | 'hi';
-
-// Infere os tipos de cada bloco a partir do idioma padrão (pt)
-type HeaderTranslations = typeof header.pt;
-type HeroTranslations = typeof hero.pt;
-type MovieSearchTranslations = typeof movieSearch.pt;
-
-export interface Translations {
-  header: HeaderTranslations;
-  hero: HeroTranslations;
-  movieSearch: MovieSearchTranslations;
-}
-
-// Função que monta o objeto de traduções completo para um idioma
-function getTranslations(lang: LanguageCode): Translations {
-  return {
-    header: header[lang as keyof typeof header] as Translations['header'],
-    hero: hero[lang as keyof typeof hero] as Translations['hero'],
-    movieSearch: movieSearch[lang as keyof typeof movieSearch] as Translations['movieSearch'],
+// Constrói o mapa de traduções dinamicamente a partir dos módulos
+const translationsMap: Record<LanguageCode, any> = {} as any;
+LANGUAGES.forEach((lang) => {
+  const code = lang.code;
+  translationsMap[code] = {
+    header: header[code as keyof typeof header],
+    hero: hero[code as keyof typeof hero],
+    movieSearch: movieSearch[code as keyof typeof movieSearch],
+    // pages: pages[code as keyof typeof pages], // quando criar
   };
-}
+});
+
+// Define o tipo Translations inferido a partir do idioma padrão (pt)
+type Translations = (typeof translationsMap)['pt'];
 
 interface LanguageContextType {
   language: LanguageCode;
@@ -36,12 +32,15 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<LanguageCode>(() => {
-    const stored = localStorage.getItem('language') as LanguageCode;
-    const validLanguages: LanguageCode[] = ['pt', 'en', 'es', 'fr', 'zh', 'ar', 'ru', 'hi'];
-    return stored && validLanguages.includes(stored) ? stored : 'pt';
+    const stored = localStorage.getItem('language') as LanguageCode | null;
+    // Verifica se o código armazenado é válido
+    if (stored && LANGUAGES.some((lang) => lang.code === stored)) {
+      return stored;
+    }
+    return 'pt';
   });
 
-  const t = getTranslations(language);
+  const t = translationsMap[language];
 
   useEffect(() => {
     localStorage.setItem('language', language);

@@ -1,0 +1,85 @@
+/* src/styles/tokens.css */
+:root {
+  /* ============================================
+     CORES PRIMÁRIAS
+  ============================================ */
+  --color-primary: #df2144;
+  --color-primary-hover: #c91e3d;
+  --color-primary-selected: #b21a36;
+  --color-primary-shadow: rgba(223, 33, 68, 0.2);
+
+  /* ============================================
+     CORES SECUNDÁRIAS (futuro)
+  ============================================ */
+  --color-secondary: #1eb7e8;
+  --color-secondary-hover: #1ba5d1;
+  --color-secondary-selected: #1892ba;
+
+  /* ============================================
+     FUNDOS
+  ============================================ */
+  --color-bg-page: #303030;
+  --color-bg-surface: #242424;
+  --color-bg-elevated: #505050;
+  --color-bg-input: #515151;
+  --color-bg-hero: #090909;
+  --color-bg-overlay: rgba(10, 10, 10, 0.96);
+
+  /* ============================================
+     TEXTOS
+  ============================================ */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.72);
+  --color-text-muted: rgba(255, 255, 255, 0.5);
+  --color-text-placeholder: #a6a6a6;
+  --color-text-select: #d6d6d6;
+  --color-text-dark: #f2f2f2;
+
+  /* ============================================
+     RATINGS / DESTAQUES
+  ============================================ */
+  --color-rating: #fdda14;
+  --color-rating-bg: #f5c518;
+
+  /* ============================================
+     BORDAS E OVERLAYS
+  ============================================ */
+  --color-border-light: rgba(255, 255, 255, 0.14);
+  --color-border-medium: rgba(255, 255, 255, 0.18);
+  --color-overlay-dark: rgba(5, 5, 5, 0.95);
+
+  /* ============================================
+     ESPAÇAMENTOS (scale de 4 em 4)
+  ============================================ */
+  --sp-0: 0;
+  --sp-1: 0.25rem; /* 4px */
+  --sp-2: 0.5rem; /* 8px */
+  --sp-3: 0.75rem; /* 12px */
+  --sp-4: 1rem; /* 16px */
+  --sp-5: 1.5rem; /* 24px */
+  --sp-6: 2rem; /* 32px */
+  --sp-7: 3rem; /* 48px */
+  --sp-8: 4rem; /* 64px */
+  --sp-9: 5rem; /* 80px */
+
+  /* ============================================
+     BORDAS (radius)
+  ============================================ */
+  --radius-sm: 2px;
+  --radius-md: 0.3rem;
+  --radius-lg: 0.35rem;
+  --radius-full: 999px;
+
+  /* ============================================
+     SOMBRAS
+  ============================================ */
+  --shadow-card: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.18);
+  --shadow-btn: 0 10px 24px rgba(223, 33, 68, 0.2);
+  --shadow-btn-hover: 0 20px 42px rgba(223, 33, 68, 0.32);
+
+  /* ============================================
+     HEADER
+  ============================================ */
+  --header-height: 92px;
+  --header-height-mobile: 76px;
+}

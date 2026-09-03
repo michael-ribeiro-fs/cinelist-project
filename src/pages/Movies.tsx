@@ -1,3 +1,4 @@
+// src/pages/Movies.tsx
 import PageContainer from '../components/PageContainer/PageContainer';
 
 function Movies() {

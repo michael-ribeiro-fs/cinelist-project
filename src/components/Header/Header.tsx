@@ -1,28 +1,19 @@
+// src/components/Header/Header.tsx
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { logger } from '../../utils/logger';
+import { LANGUAGES, type LanguageCode } from '../../constants/languages';
 import './Header.css';
 
 type HeaderProps = {
   onSearch?: (searchTerm: string) => void;
 };
 
-// Lista de idiomas disponíveis (mantida fora do componente)
-const LANGUAGES = [
-  { code: 'pt', label: 'Português', flag: '🇧🇷' },
-  { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'zh', label: '中文', flag: '🇨🇳' },
-  { code: 'ar', label: 'العربية', flag: '🇸🇦' },
-  { code: 'ru', label: 'Русский', flag: '🇷🇺' },
-  { code: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
-];
+// REMOVA a definição local de LANGUAGES
 
 function Header({ onSearch }: HeaderProps) {
-  // Usar o contexto de idioma
   const { language, setLanguage, t } = useLanguage();
-
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
@@ -72,13 +63,12 @@ function Header({ onSearch }: HeaderProps) {
     setIsLanguageMenuOpen((prev) => !prev);
   };
 
-  const handleLanguageSelect = (code: string) => {
-    setLanguage(code as any); // atualiza o idioma no contexto
+  const handleLanguageSelect = (code: LanguageCode) => {
+    setLanguage(code);
     setIsLanguageMenuOpen(false);
-    console.log(`Idioma alterado para: ${code}`);
+    logger.log(`Idioma alterado para: ${code}`);
   };
 
-  // Fechar ao tirar o mouse
   const handleMouseLeave = () => {
     setIsLanguageMenuOpen(false);
   };
@@ -192,7 +182,6 @@ function Header({ onSearch }: HeaderProps) {
             {t.header.signup}
           </a>
 
-          {/* Container do idioma com ref e onMouseLeave */}
           <div
             className="header__language-wrapper"
             ref={languageWrapperRef}

@@ -8,7 +8,7 @@
   left: 50%;
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: var(--sp-4, 1rem);
   transform: translateX(-50%);
 }
 
@@ -22,7 +22,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 50%;
   background-color: rgba(20, 20, 20, 0.72);
-  color: #ffffff;
+  color: var(--color-text-primary, #ffffff);
   backdrop-filter: blur(10px);
   cursor: pointer;
   transition:
@@ -33,7 +33,7 @@
 
 .hero__arrow:hover {
   border-color: rgba(223, 33, 68, 0.6);
-  background-color: #df2144;
+  background-color: var(--color-primary, #df2144);
   transform: scale(1.05);
 }
 
@@ -72,7 +72,7 @@
 }
 
 .hero__indicator--active {
-  background-color: #df2144;
+  background-color: var(--color-primary, #df2144);
   box-shadow: 0 0 14px rgba(223, 33, 68, 0.8);
   transform: scale(1.35);
 }
@@ -98,6 +98,6 @@
   }
 
   .hero__indicators {
-    gap: 0.5rem;
+    gap: var(--sp-2, 0.5rem);
   }
 }

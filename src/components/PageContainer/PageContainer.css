@@ -1,7 +1,21 @@
+/* src/components/PageContainer/PageContainer.css */
 .page-container {
-  padding-top: 92px;
-  color: white;
-  text-align: center;
+  padding-top: var(--header-height, 92px);
   min-height: 100vh;
-  background-color: #303030; /* agora padronizado com o Dark Gray */
+  background-color: var(--color-bg-page, #303030);
+  color: var(--color-text-primary, #ffffff);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-left: var(--sp-4, 1rem);
+  padding-right: var(--sp-4, 1rem);
+}
+
+/* Opcional: se precisar de conteúdo sem centralização vertical,
+   pode adicionar uma classe modificadora */
+.page-container--top {
+  justify-content: flex-start;
+  padding-top: calc(var(--header-height, 92px) + var(--sp-5, 1.5rem));
 }
