@@ -5,6 +5,9 @@ import { LANGUAGES, type LanguageCode } from '../constants/languages';
 import { header } from '../locales/header/header';
 import { hero } from '../locales/hero/hero';
 import { movieSearch } from '../locales/movieSearch/movieSearch';
+import { movieCarousel } from '../locales/movieCarousel/movieCarousel'; // <-- NOVA IMPORTAÇÃO
+import { featuredMovie } from '../locales/featuredMovie/featuredMovie';
+import { register } from '../locales/register/register';
 // import { pages } from '../locales/pages/pages'; // quando criar
 
 // Constrói o mapa de traduções dinamicamente a partir dos módulos
@@ -15,6 +18,9 @@ LANGUAGES.forEach((lang) => {
     header: header[code as keyof typeof header],
     hero: hero[code as keyof typeof hero],
     movieSearch: movieSearch[code as keyof typeof movieSearch],
+    movieCarousel: movieCarousel[code as keyof typeof movieCarousel], // <-- NOVA LINHA
+    featuredMovie: featuredMovie[code as keyof typeof featuredMovie],
+    register: register[code as keyof typeof register],
     // pages: pages[code as keyof typeof pages], // quando criar
   };
 });

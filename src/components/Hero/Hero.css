@@ -178,6 +178,8 @@
 
 .hero__cta {
   display: inline-flex;
+  border: none;
+  outline: none;
   border-radius: var(--radius-sm, 2px);
   align-items: center;
   justify-content: center;
@@ -190,6 +192,7 @@
   font-size: 0.85rem;
   font-weight: 800;
   text-decoration: none;
+  cursor: pointer;
   box-shadow: 0 16px 35px var(--color-primary-shadow, rgba(223, 33, 68, 0.24));
   transition:
     background-color 0.2s ease,
@@ -202,7 +205,6 @@
   box-shadow: 0 20px 42px var(--color-primary-shadow, rgba(223, 33, 68, 0.32));
   transform: translateY(-2px);
 }
-
 .hero__cta-icon {
   width: 18px;
   height: 18px;
