@@ -4,6 +4,7 @@ import MovieSearch from '../components/MovieSearch/MovieSearch';
 import MovieCarousel from '../components/MovieCarousel/MovieCarousel';
 import FeaturedMovie from '../components/FeaturedMovie/FeaturedMovie';
 import RegisterBlock from '../components/RegisterBlock/RegisterBlock';
+import Footer from '../components/Footer/Footer';
 
 function Home() {
   const { t } = useLanguage();
@@ -40,6 +41,7 @@ function Home() {
       {/* 7º Carrossel: Comédias */}
       <MovieCarousel title={t.movieCarousel.categories.comedy} />
       <RegisterBlock />
+      <Footer />
     </>
   );
 }
