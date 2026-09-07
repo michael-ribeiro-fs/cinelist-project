@@ -5,28 +5,50 @@ import { LANGUAGES, type LanguageCode } from '../constants/languages';
 import { header } from '../locales/header/header';
 import { hero } from '../locales/hero/hero';
 import { movieSearch } from '../locales/movieSearch/movieSearch';
-import { movieCarousel } from '../locales/movieCarousel/movieCarousel'; // <-- NOVA IMPORTAÇÃO
+import { movieCarousel } from '../locales/movieCarousel/movieCarousel';
 import { featuredMovie } from '../locales/featuredMovie/featuredMovie';
 import { register } from '../locales/register/register';
+import { footer } from '../locales/footer/footer';
 // import { pages } from '../locales/pages/pages'; // quando criar
 
-// Constrói o mapa de traduções dinamicamente a partir dos módulos
-const translationsMap: Record<LanguageCode, any> = {} as any;
+// ============================================
+// TIPAGEM FORTE (sem any!)
+// ============================================
+
+type Translations = {
+  header: typeof header.pt;
+  hero: typeof hero.pt;
+  movieSearch: typeof movieSearch.pt;
+  movieCarousel: typeof movieCarousel.pt;
+  featuredMovie: typeof featuredMovie.pt;
+  register: typeof register.pt;
+  footer: typeof footer.pt;
+  // pages: typeof pages.pt; // quando criar
+};
+
+// ============================================
+// CONSTRUÇÃO DO MAPA DE TRADUÇÕES
+// ============================================
+
+const translationsMap = {} as Record<LanguageCode, Translations>;
+
 LANGUAGES.forEach((lang) => {
   const code = lang.code;
   translationsMap[code] = {
     header: header[code as keyof typeof header],
     hero: hero[code as keyof typeof hero],
     movieSearch: movieSearch[code as keyof typeof movieSearch],
-    movieCarousel: movieCarousel[code as keyof typeof movieCarousel], // <-- NOVA LINHA
+    movieCarousel: movieCarousel[code as keyof typeof movieCarousel],
     featuredMovie: featuredMovie[code as keyof typeof featuredMovie],
     register: register[code as keyof typeof register],
+    footer: footer[code as keyof typeof footer],
     // pages: pages[code as keyof typeof pages], // quando criar
   };
 });
 
-// Define o tipo Translations inferido a partir do idioma padrão (pt)
-type Translations = (typeof translationsMap)['pt'];
+// ============================================
+// CONTEXTO
+// ============================================
 
 interface LanguageContextType {
   language: LanguageCode;

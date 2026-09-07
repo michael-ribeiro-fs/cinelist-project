@@ -1,9 +1,10 @@
+import { useLanguage } from '../../context/LanguageContext';
 import leftRetangle from '../../assets/images/left-retangle.png';
 import rightRetangle from '../../assets/images/right-retangle.png';
-
 import './Footer.css';
 
 function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -26,114 +27,99 @@ function Footer() {
         <div className="footer__content">
           <nav className="footer__navigation" aria-label="Navegação do rodapé">
             <div className="footer__navigation-column">
-              <h3 className="footer__navigation-title">Cinema</h3>
-
+              <h3 className="footer__navigation-title">{t.footer.navigation.cinema}</h3>
               <ul className="footer__navigation-list">
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#home">
-                    Página inicial
+                    {t.footer.navigation.home}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#movies">
-                    Filmes
+                    {t.footer.navigation.movies}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#series">
-                    Séries
+                    {t.footer.navigation.series}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#categories">
-                    Categorias
+                    {t.footer.navigation.categories}
                   </a>
                 </li>
               </ul>
             </div>
 
             <div className="footer__navigation-column">
-              <h3 className="footer__navigation-title">Descubra</h3>
-
+              <h3 className="footer__navigation-title">{t.footer.navigation.discover}</h3>
               <ul className="footer__navigation-list">
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#popular">
-                    Mais populares
+                    {t.footer.navigation.popular}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#releases">
-                    Lançamentos
+                    {t.footer.navigation.releases}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#ratings">
-                    Melhor avaliados
+                    {t.footer.navigation.ratings}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#search">
-                    Buscar
+                    {t.footer.navigation.search}
                   </a>
                 </li>
               </ul>
             </div>
 
             <div className="footer__navigation-column">
-              <h3 className="footer__navigation-title">Suporte</h3>
-
+              <h3 className="footer__navigation-title">{t.footer.navigation.support}</h3>
               <ul className="footer__navigation-list">
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#about">
-                    Sobre nós
+                    {t.footer.navigation.about}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#contact">
-                    Contato
+                    {t.footer.navigation.contact}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#help">
-                    Central de ajuda
+                    {t.footer.navigation.help}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#faq">
-                    Perguntas frequentes
+                    {t.footer.navigation.faq}
                   </a>
                 </li>
               </ul>
             </div>
 
             <div className="footer__navigation-column">
-              <h3 className="footer__navigation-title">Informações</h3>
-
+              <h3 className="footer__navigation-title">{t.footer.navigation.info}</h3>
               <ul className="footer__navigation-list">
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#privacy">
-                    Política de privacidade
+                    {t.footer.navigation.privacy}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#terms">
-                    Termos de uso
+                    {t.footer.navigation.terms}
                   </a>
                 </li>
-
-                <li className="footer__navigation-item">
+                <li>
                   <a className="footer__navigation-link" href="#cookies">
-                    Política de cookies
+                    {t.footer.navigation.cookies}
                   </a>
                 </li>
               </ul>
@@ -141,20 +127,8 @@ function Footer() {
           </nav>
 
           <section className="footer__brand">
-            <div className="footer__brand-header">
-              <span className="footer__logo">CineList</span>
-
-              <h2 className="footer__title">Seu guia completo para filmes e séries</h2>
-            </div>
-
-            <p className="footer__description">
-              Descubra novos filmes e séries, acompanhe os principais lançamentos, explore histórias
-              incríveis e encontre conteúdos cuidadosamente selecionados para tornar sua experiência
-              cinematográfica ainda mais completa, envolvente, personalizada e agradável, sempre com
-              novas opções para assistir e descobrir.
-            </p>
-
-            <p className="footer__support">Atendimento: (15) 99999-9999</p>
+            <p className="footer__description">{t.footer.description}</p>
+            <p className="footer__support">{t.footer.support}</p>
 
             <div className="footer__social-links">
               <a className="footer__social-link" href="#facebook" aria-label="Facebook">
@@ -176,9 +150,7 @@ function Footer() {
                     height="18"
                     rx="5"
                   />
-
                   <circle className="footer__social-icon-shape" cx="12" cy="12" r="4" />
-
                   <circle className="footer__social-icon-fill" cx="17.5" cy="6.5" r="1" />
                 </svg>
               </a>
@@ -206,7 +178,7 @@ function Footer() {
 
         <div className="footer__bottom">
           <p className="footer__copyright">
-            © {currentYear} CineList. Todos os direitos reservados.
+            © {currentYear} {t.footer.brand}. {t.footer.copyright}
           </p>
         </div>
       </div>

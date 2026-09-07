@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import type { Movie } from '../../types/movie';
 import { moviesData } from '../../data/movies';
@@ -10,25 +10,52 @@ type MovieCarouselProps = {
   category?: 'recommended' | 'action' | 'comedy' | 'drama' | 'sciFi'; // para futuras categorias
 };
 
-const SCROLL_AMOUNT = 600;
-
 function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps) {
   const { t } = useLanguage();
   const carouselTrackRef = useRef<HTMLDivElement>(null);
+  const [scrollAmount, setScrollAmount] = useState(0);
 
   // Se não for passado título, usa a tradução padrão
   const carouselTitle = title || t.movieCarousel?.defaultTitle || 'Filmes recomendados';
 
+  // Calcula a largura de 1 card + gap dinamicamente
+  useEffect(() => {
+    const calculateScrollAmount = () => {
+      if (!carouselTrackRef.current) return;
+
+      const track = carouselTrackRef.current;
+      const firstCard = track.querySelector('.movie-carousel__card') as HTMLElement;
+
+      if (!firstCard) return;
+
+      // Pega a largura total do card (incluindo margens/gaps)
+      const cardWidth = firstCard.offsetWidth;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+
+      setScrollAmount(cardWidth + gap);
+    };
+
+    calculateScrollAmount();
+
+    // Recalcula em resize da tela
+    const handleResize = () => {
+      calculateScrollAmount();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handlePreviousClick = () => {
     carouselTrackRef.current?.scrollBy({
-      left: -SCROLL_AMOUNT,
+      left: -scrollAmount,
       behavior: 'smooth',
     });
   };
 
   const handleNextClick = () => {
     carouselTrackRef.current?.scrollBy({
-      left: SCROLL_AMOUNT,
+      left: scrollAmount,
       behavior: 'smooth',
     });
   };

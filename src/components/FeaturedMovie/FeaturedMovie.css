@@ -74,14 +74,14 @@
 .featured-movie__category-label {
   display: block;
   margin-bottom: 0.4rem;
-  color: #aaaaaa;
+  color: var(--color-text-muted, #aaaaaa);
   font-size: 0.72rem;
   font-weight: 500;
 }
 
 .featured-movie__category-value {
   margin: 0;
-  color: #e5e5e5;
+  color: var(--color-text-secondary, #e5e5e5);
   font-size: 0.85rem;
 }
 
@@ -92,7 +92,7 @@
 .featured-movie__summary-label {
   display: block;
   margin-bottom: var(--sp-2, 0.5rem);
-  color: #aaaaaa;
+  color: var(--color-text-muted, #aaaaaa);
   font-size: 0.72rem;
   font-weight: 500;
 }
@@ -102,7 +102,7 @@
   max-width: 22rem;
   margin: 0;
   overflow: hidden;
-  color: #d0d0d0;
+  color: var(--color-text-secondary, #d0d0d0);
   font-size: 0.78rem;
   line-height: 1.7;
   -webkit-box-orient: vertical;
@@ -124,12 +124,12 @@
 }
 
 .featured-movie__metadata-label {
-  color: #9f9f9f;
+  color: var(--color-text-muted, #9f9f9f);
   font-size: 0.72rem;
 }
 
 .featured-movie__duration {
-  color: var(--color-rating, #fdda14); /* <-- CORRIGIDO PARA AMARELO */
+  color: var(--color-rating, #fdda14);
   font-size: 0.8rem;
   font-weight: 600;
 }
