@@ -1,4 +1,4 @@
-import { moviesData } from '../../data/movies';
+import { usePopularMovies } from '../../hooks/queries/useMovies';
 import { useCarousel } from '../../hooks/useCarousel';
 import { useLanguage } from '../../context/LanguageContext';
 import HeroControls from '../HeroControls/HeroControls';
@@ -7,23 +7,57 @@ import './Hero.css';
 const AUTOPLAY_INTERVAL = 60000;
 
 function Hero() {
-  const { t } = useLanguage(); // <-- contexto de tradução
-  const movies = moviesData.movies;
-  const total = movies.length;
+  const { t } = useLanguage();
+  const { data: movies, isLoading, error } = usePopularMovies(1, 7);
 
+  // 🔥 useCarousel SEMPRE chamado
+  const total = movies?.length || 0;
   const { currentIndex, goTo, next, prev, setIsPaused } = useCarousel({
     total,
     interval: AUTOPLAY_INTERVAL,
-    autoPlay: true,
+    autoPlay: total > 0,
   });
+
+  // Early returns DEPOIS dos hooks
+  if (isLoading) {
+    return (
+      <div
+        className="hero-loading"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+        }}
+      >
+        Carregando filmes...
+      </div>
+    );
+  }
+
+  if (error || !movies || movies.length === 0) {
+    return (
+      <div
+        className="hero-error"
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+        }}
+      >
+        Erro ao carregar filmes. Tente novamente.
+      </div>
+    );
+  }
 
   const activeMovie = movies[currentIndex];
 
-  // Pausar autoplay no hover/foco
   const handlePause = () => setIsPaused(true);
   const handleResume = () => setIsPaused(false);
 
-  // Suporte a teclado (setas)
   const handleKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key === 'ArrowLeft') {
       event.preventDefault();
@@ -94,7 +128,7 @@ function Hero() {
         onNext={next}
         onPrev={prev}
         onGoTo={goTo}
-        t={t} // <-- passa as traduções para os controles
+        t={t}
       />
 
       <div className="hero__progress">

@@ -1,26 +1,49 @@
 import { useCarousel } from '../../hooks/useCarousel';
 import { useLanguage } from '../../context/LanguageContext';
-import { moviesData } from '../../data/movies';
+import { useTrendingMovies } from '../../hooks/queries/useMovies';
 import './FeaturedMovie.css';
 
 const AUTOPLAY_INTERVAL = 7000;
 
 function FeaturedMovie() {
   const { t } = useLanguage();
-  const movies = moviesData.movies;
-  const total = movies.length;
+  const { data: movies, isLoading, error } = useTrendingMovies('week', 7);
 
+  // 🔥 IMPORTANTE: useCarousel SEMPRE deve ser chamado, mesmo se não tiver dados
+  const total = movies?.length || 0;
   const { currentIndex, goTo, next, prev, setIsPaused } = useCarousel({
     total,
     interval: AUTOPLAY_INTERVAL,
-    autoPlay: true,
+    autoPlay: total > 0,
   });
+
+  // Agora os early returns vêm DEPOIS de todos os hooks
+  if (isLoading) {
+    return (
+      <div className="featured-movie">
+        <div className="featured-movie__container">
+          <p style={{ color: 'white', padding: '2rem', textAlign: 'center' }}>
+            Carregando filmes em destaque...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !movies || movies.length === 0) {
+    return (
+      <div className="featured-movie">
+        <div className="featured-movie__container">
+          <p style={{ color: 'white', padding: '2rem', textAlign: 'center' }}>
+            Erro ao carregar filmes. Tente novamente.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const currentMovie = movies[currentIndex];
 
-  if (!currentMovie) return null;
-
-  // Pausar autoplay no hover
   const handlePause = () => setIsPaused(true);
   const handleResume = () => setIsPaused(false);
 
@@ -106,10 +129,10 @@ function FeaturedMovie() {
           <div className="featured-movie__indicators">
             {movies.map((movie, index) => (
               <button
+                key={movie.id}
                 className={`featured-movie__indicator ${
                   index === currentIndex ? 'featured-movie__indicator--active' : ''
                 }`}
-                key={movie.id}
                 type="button"
                 onClick={() => goTo(index)}
                 aria-label={`${t.featuredMovie?.goTo || 'Mostrar'} ${movie.title}`}

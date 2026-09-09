@@ -1,50 +1,84 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import {
+  usePopularMovies,
+  useUpcomingMovies,
+  useTrendingMovies,
+  useNowPlayingMovies,
+  useMoviesByGenre,
+} from '../../hooks/queries/useMovies';
 import type { Movie } from '../../types/movie';
-import { moviesData } from '../../data/movies';
 import './MovieCarousel.css';
 
 type MovieCarouselProps = {
   title?: string;
   movies?: Movie[];
-  category?: 'recommended' | 'action' | 'comedy' | 'drama' | 'sciFi'; // para futuras categorias
+  category?: 'popular' | 'upcoming' | 'trending' | 'nowPlaying' | 'action' | 'sciFi' | 'comedy';
+  limit?: number;
 };
 
-function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps) {
+function MovieCarousel({
+  title,
+  movies: externalMovies,
+  category = 'popular',
+  limit,
+}: MovieCarouselProps) {
   const { t } = useLanguage();
   const carouselTrackRef = useRef<HTMLDivElement>(null);
   const [scrollAmount, setScrollAmount] = useState(0);
 
-  // Se não for passado título, usa a tradução padrão
-  const carouselTitle = title || t.movieCarousel?.defaultTitle || 'Filmes recomendados';
+  // Determina qual hook usar e os argumentos
+  let result;
+  if (category === 'popular' || (!category && !externalMovies)) {
+    result = usePopularMovies(1, limit);
+  } else if (category === 'upcoming') {
+    result = useUpcomingMovies(1, limit);
+  } else if (category === 'trending') {
+    result = useTrendingMovies('week', limit);
+  } else if (category === 'nowPlaying') {
+    result = useNowPlayingMovies(1, limit);
+  } else if (category === 'action') {
+    result = useMoviesByGenre(28, 1, limit);
+  } else if (category === 'sciFi') {
+    result = useMoviesByGenre(878, 1, limit);
+  } else if (category === 'comedy') {
+    result = useMoviesByGenre(35, 1, limit);
+  } else {
+    result = usePopularMovies(1, limit);
+  }
 
-  // Calcula a largura de 1 card + gap dinamicamente
+  const { data: apiMovies, isLoading, error } = result;
+  const movies = externalMovies ?? apiMovies ?? [];
+
+  // Título
+  const defaultTitle = t.movieCarousel?.defaultTitle || 'Filmes recomendados';
+  const carouselTitle = title || defaultTitle;
+
+  // Scroll dinâmico – RECALCULADO SEMPRE QUE OS FILMES MUDAREM
   useEffect(() => {
+    // Função que calcula a largura de 1 card + gap
     const calculateScrollAmount = () => {
       if (!carouselTrackRef.current) return;
-
       const track = carouselTrackRef.current;
       const firstCard = track.querySelector('.movie-carousel__card') as HTMLElement;
-
       if (!firstCard) return;
-
-      // Pega a largura total do card (incluindo margens/gaps)
       const cardWidth = firstCard.offsetWidth;
       const gap = parseFloat(getComputedStyle(track).gap) || 0;
-
       setScrollAmount(cardWidth + gap);
     };
 
-    calculateScrollAmount();
+    // Executa o cálculo após o DOM ser atualizado
+    requestAnimationFrame(() => {
+      calculateScrollAmount();
+    });
 
     // Recalcula em resize da tela
     const handleResize = () => {
-      calculateScrollAmount();
+      requestAnimationFrame(calculateScrollAmount);
     };
-
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [movies]); // <-- DEPENDÊNCIA: executa sempre que a lista de filmes mudar
 
   const handlePreviousClick = () => {
     carouselTrackRef.current?.scrollBy({
@@ -59,6 +93,43 @@ function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps
       behavior: 'smooth',
     });
   };
+
+  // Early returns após todos os hooks
+  if (!externalMovies && isLoading) {
+    return (
+      <div className="movie-carousel">
+        <div className="movie-carousel__container">
+          <p style={{ color: 'white', padding: '2rem', textAlign: 'center' }}>
+            Carregando filmes...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!externalMovies && error) {
+    return (
+      <div className="movie-carousel">
+        <div className="movie-carousel__container">
+          <p style={{ color: 'white', padding: '2rem', textAlign: 'center' }}>
+            Erro ao carregar filmes. Tente novamente.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!movies || movies.length === 0) {
+    return (
+      <div className="movie-carousel">
+        <div className="movie-carousel__container">
+          <p style={{ color: 'white', padding: '2rem', textAlign: 'center' }}>
+            Nenhum filme disponível.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section className="movie-carousel">
@@ -79,7 +150,6 @@ function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps
                 <path className="movie-carousel__navigation-icon-path" d="M15 18L9 12L15 6" />
               </svg>
             </button>
-
             <button
               className="movie-carousel__navigation-button"
               type="button"
@@ -95,7 +165,6 @@ function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps
               </svg>
             </button>
           </div>
-
           <h2 className="movie-carousel__title">{carouselTitle}</h2>
         </div>
 
@@ -109,20 +178,16 @@ function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps
                   alt={`Pôster do filme ${movie.title}`}
                   loading="lazy"
                 />
-
                 <div className="movie-carousel__overlay">
                   <div className="movie-carousel__overlay-content">
                     <h3 className="movie-carousel__overlay-title">{movie.title}</h3>
-
                     <p className="movie-carousel__description">{movie.description}</p>
-
                     <button className="movie-carousel__watch-button" type="button">
                       {t.movieCarousel?.watchButton || 'Assistir'}
                     </button>
                   </div>
                 </div>
               </div>
-
               <div className="movie-carousel__content">
                 <div className="movie-carousel__metadata">
                   <div className="movie-carousel__rating">
@@ -131,7 +196,6 @@ function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps
                       {movie.rating.toFixed(1)}
                     </span>
                   </div>
-
                   <div className="movie-carousel__duration">
                     <svg
                       className="movie-carousel__duration-icon"
@@ -149,7 +213,6 @@ function MovieCarousel({ title, movies = moviesData.movies }: MovieCarouselProps
                     <span className="movie-carousel__metadata-value">{movie.duration}</span>
                   </div>
                 </div>
-
                 <h3 className="movie-carousel__movie-title">{movie.title}</h3>
               </div>
             </article>

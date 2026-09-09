@@ -14,32 +14,33 @@ function Home() {
       <Hero />
       <MovieSearch />
 
-      {/* 1º Carrossel: Recomendados (título padrão) */}
-      <MovieCarousel />
+      {/* 1º Carrossel: Recomendados (popular) */}
+      <MovieCarousel category="popular" />
 
-      {/* 2º Carrossel: Lançamentos */}
-      <MovieCarousel title={t.movieCarousel.categories.releases} />
+      {/* 2º Carrossel: Lançamentos (upcoming) */}
+      <MovieCarousel category="upcoming" title={t.movieCarousel.categories.releases} />
 
       {/* 1º Featured */}
       <FeaturedMovie />
 
-      {/* 3º Carrossel: Em alta */}
-      <MovieCarousel title={t.movieCarousel.categories.trending} />
+      {/* 3º Carrossel: Em alta (trending) */}
+      <MovieCarousel category="trending" title={t.movieCarousel.categories.trending} />
 
-      {/* 4º Carrossel: Mais assistidos */}
-      <MovieCarousel title={t.movieCarousel.categories.popular} />
+      {/* 4º Carrossel: Mais assistidos (nowPlaying) */}
+      <MovieCarousel category="nowPlaying" title={t.movieCarousel.categories.popular} />
 
       {/* 2º Featured */}
       <FeaturedMovie />
 
       {/* 5º Carrossel: Ação e aventura */}
-      <MovieCarousel title={t.movieCarousel.categories.action} />
+      <MovieCarousel category="action" title={t.movieCarousel.categories.action} />
 
       {/* 6º Carrossel: Ficção científica */}
-      <MovieCarousel title={t.movieCarousel.categories.sciFi} />
+      <MovieCarousel category="sciFi" title={t.movieCarousel.categories.sciFi} />
 
       {/* 7º Carrossel: Comédias */}
-      <MovieCarousel title={t.movieCarousel.categories.comedy} />
+      <MovieCarousel category="comedy" title={t.movieCarousel.categories.comedy} />
+
       <RegisterBlock />
       <Footer />
     </>
