@@ -8,6 +8,8 @@
 [![TanStack Query](https://img.shields.io/badge/TanStack_Query-5-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/query)
 [![TMDB API](https://img.shields.io/badge/TMDB_API-v3-01B4E4?logo=themoviedatabase&logoColor=white)](https://developer.themoviedb.org/)
 
+> ⚠️ **Project status:** actively under development. Not yet deployed. See [Project Status](#-project-status) for details.
+
 ---
 
 ## 📖 Overview
@@ -24,6 +26,25 @@ The project emphasizes:
 
 ---
 
+## 🚧 Project Status
+
+**CineList is currently in active development and has not been deployed yet.**
+
+The decision to keep the project offline for now is intentional: I'm prioritizing **architecture quality, code consistency and test coverage** before shipping anything to production. Once the roadmap below reaches a stable milestone, the project will be deployed and made publicly available.
+
+What still needs to be completed before deployment:
+
+- [ ] Movie details page (`/movie/:id`)
+- [ ] Actor page with TMDB person data
+- [ ] Favorites with `localStorage` persistence
+- [ ] Automated tests (Vitest + Testing Library)
+- [ ] Error boundaries and graceful fallbacks
+- [ ] Final performance and accessibility audit
+
+The fact that the project is not deployed is a **deliberate engineering choice**, not a sign of abandonment — every commit reflects intentional progress toward a production-ready state.
+
+---
+
 ## 🎨 Design Reference
 
 The visual design is based on the **Movies – TV Shows Website (Cinema City – Community)** template, available on Figma:
@@ -31,6 +52,20 @@ The visual design is based on the **Movies – TV Shows Website (Cinema City –
 🔗 [Movies – TV Shows Website (Cinema City – Community) on Figma](https://www.figma.com/design/etb83LzsWiRE2ynv4kTy4b/Movies---Tv-Shows-Website--Cinema-City---Community-?node-id=0-1&p=f&t=zk3Am3FKj0vH2ROl-0)
 
 The layout, spacing, typography and color palette were adapted to the project's own **Design Token** system, ensuring visual consistency while keeping the codebase free from hardcoded values.
+
+### Figma Template (Reference)
+
+<p align="center">
+  <img src="./src/assets/images/template-figma.png" alt="Figma template - Cinema City" width="90%" />
+</p>
+
+### Current Implementation
+
+<p align="center">
+  <img src="./src/assets/images/cinelist-now.png" alt="CineList - current state" width="90%" />
+</p>
+
+> 📌 The side-by-side comparison above shows the visual fidelity between the reference design and the current state of the implementation. The project is intentionally styled to match the template closely, while using a fully modular and token-based CSS architecture.
 
 ---
 
