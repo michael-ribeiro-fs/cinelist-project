@@ -1,62 +1,33 @@
 import { useRef, useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import {
-  usePopularMovies,
-  useUpcomingMovies,
-  useTrendingMovies,
-  useNowPlayingMovies,
-  useMoviesByGenre,
-} from '../../hooks/queries/useMovies';
+import { useMoviesByTheme } from '../../hooks/queries/useMovies';
+import type { MovieThemeKey } from '../../constants/movieThemes';
 import type { Movie } from '../../types/movie';
 import './MovieCarousel.css';
 
 type MovieCarouselProps = {
+  theme: MovieThemeKey;
   title?: string;
   movies?: Movie[];
-  category?: 'popular' | 'upcoming' | 'trending' | 'nowPlaying' | 'action' | 'sciFi' | 'comedy';
   limit?: number;
 };
 
-function MovieCarousel({
-  title,
-  movies: externalMovies,
-  category = 'popular',
-  limit,
-}: MovieCarouselProps) {
+function MovieCarousel({ theme, title, movies: externalMovies, limit }: MovieCarouselProps) {
   const { t } = useLanguage();
   const carouselTrackRef = useRef<HTMLDivElement>(null);
   const [scrollAmount, setScrollAmount] = useState(0);
 
-  // Determina qual hook usar e os argumentos
-  let result;
-  if (category === 'popular' || (!category && !externalMovies)) {
-    result = usePopularMovies(1, limit);
-  } else if (category === 'upcoming') {
-    result = useUpcomingMovies(1, limit);
-  } else if (category === 'trending') {
-    result = useTrendingMovies('week', limit);
-  } else if (category === 'nowPlaying') {
-    result = useNowPlayingMovies(1, limit);
-  } else if (category === 'action') {
-    result = useMoviesByGenre(28, 1, limit);
-  } else if (category === 'sciFi') {
-    result = useMoviesByGenre(878, 1, limit);
-  } else if (category === 'comedy') {
-    result = useMoviesByGenre(35, 1, limit);
-  } else {
-    result = usePopularMovies(1, limit);
-  }
-
-  const { data: apiMovies, isLoading, error } = result;
+  // Hook genérico baseado no tema
+  const { data: apiMovies, isLoading, error } = useMoviesByTheme(theme, 1, limit);
   const movies = externalMovies ?? apiMovies ?? [];
 
-  // Título
-  const defaultTitle = t.movieCarousel?.defaultTitle || 'Filmes recomendados';
-  const carouselTitle = title || defaultTitle;
+  // Título: prop > tradução do tema > fallback
+  const themeTitle = t.movieCarousel?.themes?.[theme];
+  const carouselTitle =
+    title || themeTitle || t.movieCarousel?.defaultTitle || 'Filmes recomendados';
 
-  // Scroll dinâmico – RECALCULADO SEMPRE QUE OS FILMES MUDAREM
+  // Scroll dinâmico
   useEffect(() => {
-    // Função que calcula a largura de 1 card + gap
     const calculateScrollAmount = () => {
       if (!carouselTrackRef.current) return;
       const track = carouselTrackRef.current;
@@ -67,18 +38,12 @@ function MovieCarousel({
       setScrollAmount(cardWidth + gap);
     };
 
-    // Executa o cálculo após o DOM ser atualizado
-    requestAnimationFrame(() => {
-      calculateScrollAmount();
-    });
+    requestAnimationFrame(() => calculateScrollAmount());
 
-    // Recalcula em resize da tela
-    const handleResize = () => {
-      requestAnimationFrame(calculateScrollAmount);
-    };
+    const handleResize = () => requestAnimationFrame(calculateScrollAmount);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [movies]); // <-- DEPENDÊNCIA: executa sempre que a lista de filmes mudar
+  }, [movies]);
 
   const handlePreviousClick = () => {
     carouselTrackRef.current?.scrollBy({
@@ -94,7 +59,7 @@ function MovieCarousel({
     });
   };
 
-  // Early returns após todos os hooks
+  // Early returns após hooks
   if (!externalMovies && isLoading) {
     return (
       <div className="movie-carousel">

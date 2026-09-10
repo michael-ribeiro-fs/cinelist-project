@@ -69,10 +69,6 @@ function Header({ onSearch }: HeaderProps) {
     logger.log(`Idioma alterado para: ${code}`);
   };
 
-  const handleMouseLeave = () => {
-    setIsLanguageMenuOpen(false);
-  };
-
   return (
     <header className="header">
       <div className="header__container">
@@ -182,11 +178,7 @@ function Header({ onSearch }: HeaderProps) {
             {t.header.signup}
           </a>
 
-          <div
-            className="header__language-wrapper"
-            ref={languageWrapperRef}
-            onMouseLeave={handleMouseLeave}
-          >
+          <div className="header__language-wrapper" ref={languageWrapperRef}>
             <button
               className="header__language-button"
               type="button"

@@ -30,7 +30,6 @@ export function mapTMDBMovieToMovie(
     ? `${env.tmdbImageUrl}${tmdbMovie.poster_path}`
     : '/placeholder-image.jpg';
 
-  // Se já tiver runtime (detalhes), usa; senão, deixa como string vazia
   const duration = (tmdbMovie as TMDBMovieDetailsResponse).runtime
     ? `${(tmdbMovie as TMDBMovieDetailsResponse).runtime}min`
     : '';
@@ -65,21 +64,25 @@ export function mapTMDBMovieListToMovies(
 /**
  * Busca os detalhes (runtime) para uma lista de filmes.
  * Retorna a lista de filmes com a duração preenchida.
+ *
+ * @param movies   - Lista de filmes a serem enriquecidos
+ * @param language - Código de idioma TMDB (ex: 'pt-BR', 'en-US')
  */
-export async function enrichMoviesWithRuntime(movies: Movie[]): Promise<Movie[]> {
+export async function enrichMoviesWithRuntime(
+  movies: Movie[],
+  language?: string
+): Promise<Movie[]> {
   if (movies.length === 0) return movies;
 
-  // Busca detalhes de todos os filmes em paralelo
   const detailsPromises = movies.map((movie) =>
     apiClient
-      .get<TMDBMovieDetailsResponse>(TMDB_ENDPOINTS.MOVIE_DETAILS(movie.id))
+      .get<TMDBMovieDetailsResponse>(TMDB_ENDPOINTS.MOVIE_DETAILS(movie.id), { language })
       .then((details) => ({ movie, runtime: details.runtime }))
       .catch(() => ({ movie, runtime: null }))
   );
 
   const results = await Promise.all(detailsPromises);
 
-  // Atualiza a duração de cada filme
   return results.map(({ movie, runtime }) => ({
     ...movie,
     duration: runtime ? `${runtime}min` : 'Duração não informada',
