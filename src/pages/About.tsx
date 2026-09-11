@@ -1,11 +1,11 @@
 // src/pages/About.tsx
 import PageContainer from '../components/PageContainer/PageContainer';
+import TMDBCredits from '../components/TMDBCredits/TMDBCredits';
 
 function About() {
   return (
     <PageContainer>
-      <h1>Sobre</h1>
-      <p>Em breve...</p>
+      <TMDBCredits />
     </PageContainer>
   );
 }

@@ -1,0 +1,446 @@
+.movie-grid {
+  width: 100%;
+  padding: 2.5rem 0 4rem;
+  background-color: #2c2c2c;
+}
+
+.movie-grid__container {
+  width: min(100% - 6rem, 1320px);
+  margin: 0 auto;
+}
+
+.movie-grid__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.75rem;
+}
+
+.movie-grid__title {
+  margin: 0;
+  color: #f5f5f5;
+  font-size: 1.45rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.movie-grid__count {
+  color: #999999;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+/* ========================================
+   MOVIE GRID
+   ======================================== */
+
+.movie-grid__list {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 1.5rem 1.25rem;
+}
+
+/* ========================================
+   MOVIE CARD
+   ======================================== */
+
+.movie-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 0.4rem;
+  background-color: #222222;
+  box-shadow: 0 0.35rem 0.8rem rgba(0, 0, 0, 0.16);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.movie-card:hover {
+  transform: translateY(-0.45rem);
+  box-shadow: 0 0.9rem 1.6rem rgba(0, 0, 0, 0.32);
+}
+
+/* ========================================
+   MOVIE IMAGE
+   ======================================== */
+
+.movie-card__image-wrapper {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2 / 3;
+  background-color: #181818;
+}
+
+.movie-card__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition:
+    transform 0.35s ease,
+    filter 0.35s ease;
+}
+
+.movie-card:hover .movie-card__image {
+  transform: scale(1.045);
+  filter: brightness(0.72);
+}
+
+/* ========================================
+   HOVER OVERLAY
+   ======================================== */
+
+.movie-card__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 1rem;
+  background: rgba(10, 10, 10, 0.48);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.movie-card:hover .movie-card__overlay {
+  opacity: 1;
+}
+
+.movie-card__favorite {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  background-color: rgba(20, 20, 20, 0.72);
+  color: #ffffff;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-0.4rem);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.movie-card:hover .movie-card__favorite {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.movie-card__favorite:hover {
+  background-color: #e91d45;
+  border-color: #e91d45;
+}
+
+.movie-card__favorite-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.movie-card__details {
+  min-width: 7.5rem;
+  padding: 0.6rem 0.9rem;
+  border: 0.0625rem solid #e91d45;
+  border-radius: 0.3rem;
+  background-color: #e91d45;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transform: translateY(0.5rem);
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.movie-card:hover .movie-card__details {
+  transform: translateY(0);
+}
+
+.movie-card__details:hover {
+  background-color: #c9163a;
+}
+
+/* ========================================
+   MOVIE BODY
+   ======================================== */
+
+.movie-card__body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 0.65rem 0.7rem 0.8rem;
+}
+
+.movie-card__metadata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.movie-card__rating,
+.movie-card__duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 0;
+  color: #c4c4c4;
+  font-size: 0.67rem;
+  white-space: nowrap;
+}
+
+.movie-card__rating-icon {
+  color: #ffd400;
+  font-size: 0.7rem;
+}
+
+.movie-card__rating-value {
+  color: #cfcfcf;
+}
+
+.movie-card__duration-icon {
+  color: #ffd400;
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.movie-card__duration-value {
+  color: #bdbdbd;
+}
+
+.movie-card__title {
+  display: -webkit-box;
+  overflow: hidden;
+  min-height: 2.4em;
+  margin: 0;
+  color: #f2f2f2;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.movie-card__year {
+  margin-top: 0.35rem;
+  color: #777777;
+  font-size: 0.65rem;
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.movie-grid__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 18rem;
+  padding: 3rem 1.5rem;
+  border: 0.0625rem solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.5rem;
+  background-color: #242424;
+  text-align: center;
+}
+
+.movie-grid__empty-icon {
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.movie-grid__empty-title {
+  margin: 0 0 0.5rem;
+  color: #f2f2f2;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.movie-grid__empty-text {
+  max-width: 28rem;
+  margin: 0;
+  color: #929292;
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+/* ========================================
+   LARGE TABLET
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .movie-grid__container {
+    width: min(100% - 4rem, 1080px);
+  }
+
+  .movie-grid__list {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+/* ========================================
+   TABLET
+   ======================================== */
+
+@media (max-width: 960px) {
+  .movie-grid__container {
+    width: min(100% - 3rem, 820px);
+  }
+
+  .movie-grid__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.1rem;
+  }
+
+  .movie-card__body {
+    padding: 0.6rem;
+  }
+
+  .movie-card__metadata {
+    margin-bottom: 0.45rem;
+  }
+
+  .movie-card__title {
+    font-size: 0.74rem;
+  }
+}
+
+/* ========================================
+   MOBILE LANDSCAPE
+   ======================================== */
+
+@media (max-width: 720px) {
+  .movie-grid {
+    padding: 2rem 0 3rem;
+  }
+
+  .movie-grid__container {
+    width: min(100% - 2rem, 620px);
+  }
+
+  .movie-grid__header {
+    align-items: center;
+    margin-bottom: 1.25rem;
+  }
+
+  .movie-grid__title {
+    font-size: 1.3rem;
+  }
+
+  .movie-grid__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .movie-card__overlay {
+    display: none;
+  }
+
+  .movie-card:hover {
+    transform: translateY(-0.2rem);
+  }
+
+  .movie-card:hover .movie-card__image {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 520px) {
+  .movie-grid__container {
+    width: min(100% - 1.5rem, 440px);
+  }
+
+  .movie-grid__header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .movie-grid__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 0.8rem;
+  }
+
+  .movie-card__body {
+    padding: 0.6rem;
+  }
+
+  .movie-card__metadata {
+    gap: 0.3rem;
+  }
+
+  .movie-card__rating,
+  .movie-card__duration {
+    font-size: 0.62rem;
+  }
+
+  .movie-card__title {
+    font-size: 0.72rem;
+  }
+
+  .movie-card__year {
+    font-size: 0.6rem;
+  }
+}
+
+/* ========================================
+   SMALL MOBILE
+   ======================================== */
+
+@media (max-width: 360px) {
+  .movie-grid__container {
+    width: calc(100% - 1rem);
+  }
+
+  .movie-grid__list {
+    gap: 0.75rem 0.6rem;
+  }
+
+  .movie-card__body {
+    padding: 0.5rem;
+  }
+
+  .movie-card__rating,
+  .movie-card__duration {
+    font-size: 0.58rem;
+  }
+
+  .movie-card__title {
+    font-size: 0.68rem;
+  }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .movie-card,
+  .movie-card__image,
+  .movie-card__overlay,
+  .movie-card__favorite,
+  .movie-card__details {
+    transition: none;
+  }
+}

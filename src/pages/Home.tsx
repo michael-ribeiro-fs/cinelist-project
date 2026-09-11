@@ -1,5 +1,4 @@
 import Hero from '../components/Hero/Hero';
-import MovieSearch from '../components/MovieSearch/MovieSearch';
 import MovieCarousel from '../components/MovieCarousel/MovieCarousel';
 import FeaturedMovie from '../components/FeaturedMovie/FeaturedMovie';
 import RegisterBlock from '../components/RegisterBlock/RegisterBlock';
@@ -9,7 +8,6 @@ function Home() {
   return (
     <>
       <Hero />
-      <MovieSearch />
 
       {/* ============================================
           CARROSSEIS TEMÁTICOS
