@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react';
-import { useLanguage } from '../../context/LanguageContext';
+import { useRef, useState, useEffect, useMemo } from 'react';
+import { useLanguage } from '../../context/useLanguage';
 import { useMoviesByTheme } from '../../hooks/queries/useMovies';
 import type { MovieThemeKey } from '../../constants/movieThemes';
 import type { Movie } from '../../types/movie';
@@ -19,7 +19,8 @@ function MovieCarousel({ theme, title, movies: externalMovies, limit }: MovieCar
 
   // Hook genérico baseado no tema
   const { data: apiMovies, isLoading, error } = useMoviesByTheme(theme, 1, limit);
-  const movies = externalMovies ?? apiMovies ?? [];
+
+  const movies = useMemo(() => externalMovies ?? apiMovies ?? [], [externalMovies, apiMovies]);
 
   // Título: prop > tradução do tema > fallback
   const themeTitle = t.movieCarousel?.themes?.[theme];

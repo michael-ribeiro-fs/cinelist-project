@@ -1,6 +1,6 @@
 import { usePopularMovies } from '../../hooks/queries/useMovies';
 import { useCarousel } from '../../hooks/useCarousel';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import HeroControls from '../HeroControls/HeroControls';
 import './Hero.css';
 

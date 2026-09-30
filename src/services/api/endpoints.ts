@@ -18,8 +18,7 @@ export const TMDB_ENDPOINTS = {
   SEARCH_TV: '/search/tv',
 
   // Tendências
-  TRENDING: (mediaType: string, timeWindow: string) =>
-    `/trending/${mediaType}/${timeWindow}`,
+  TRENDING: (mediaType: string, timeWindow: string) => `/trending/${mediaType}/${timeWindow}`,
 
   // Gêneros
   GENRES_MOVIE: '/genre/movie/list',

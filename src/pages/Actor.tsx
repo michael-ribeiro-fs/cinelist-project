@@ -8,9 +8,9 @@ function Actor() {
     <>
       <Header />
       <ActorHero />
-      <MovieCarousel />
-      <MovieCarousel />
-      <MovieCarousel />
+      <MovieCarousel theme="popular" />
+      <MovieCarousel theme="topRated" />
+      <MovieCarousel theme="drama" />
       <Footer />
     </>
   );

@@ -2,8 +2,6 @@
 
 import type { CuratedListKey } from '../data/curatedLists';
 
-
-
 // ============================================
 // TIPOS DE FONTE DE DADOS
 // ============================================
@@ -60,12 +58,12 @@ export const MOVIE_THEMES = {
   western: { key: 'western', source: { kind: 'genre', genreId: 37 } },
 
   // ========================================
-// 🍅 LISTAS CURADAS (sugestões manuais)
-// ========================================
-cineTomato: {
-  key: 'cineTomato',
-  source: { kind: 'curated', listId: 'cineTomato' },
-},
+  // 🍅 LISTAS CURADAS (sugestões manuais)
+  // ========================================
+  cineTomato: {
+    key: 'cineTomato',
+    source: { kind: 'curated', listId: 'cineTomato' },
+  },
 } as const satisfies Record<string, MovieTheme>;
 
 export type MovieThemeKey = keyof typeof MOVIE_THEMES;

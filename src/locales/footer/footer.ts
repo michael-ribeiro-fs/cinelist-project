@@ -98,11 +98,11 @@ export const footer = {
       support: 'Assistance',
       about: 'À propos',
       contact: 'Contact',
-      help: 'Centre d\'aide',
+      help: "Centre d'aide",
       faq: 'FAQ',
       info: 'Informations',
       privacy: 'Politique de confidentialité',
-      terms: 'Conditions d\'utilisation',
+      terms: "Conditions d'utilisation",
       cookies: 'Politique des cookies',
     },
     description:

@@ -14,7 +14,10 @@ export const LANGUAGES = [
 export type LanguageCode = (typeof LANGUAGES)[number]['code'];
 
 // Opcional: mapa para acesso rápido
-export const LANGUAGE_MAP = LANGUAGES.reduce((acc, lang) => {
-  acc[lang.code] = { label: lang.label, flag: lang.flag };
-  return acc;
-}, {} as Record<LanguageCode, { label: string; flag: string }>);
+export const LANGUAGE_MAP = LANGUAGES.reduce(
+  (acc, lang) => {
+    acc[lang.code] = { label: lang.label, flag: lang.flag };
+    return acc;
+  },
+  {} as Record<LanguageCode, { label: string; flag: string }>,
+);

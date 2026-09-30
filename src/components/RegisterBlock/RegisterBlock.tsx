@@ -1,4 +1,4 @@
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import './RegisterBlock.css';
 
 export default function RegisterBlock() {

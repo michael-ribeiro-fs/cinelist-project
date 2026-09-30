@@ -1,4 +1,4 @@
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import leftRetangle from '../../assets/images/left-retangle.png';
 import rightRetangle from '../../assets/images/right-retangle.png';
 import './Footer.css';

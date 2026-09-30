@@ -1,5 +1,5 @@
 import type { Movie } from '../../types/movie';
-import type { Translations } from '../../types/language';
+import type { Translations } from '../../context/languageContextBase';
 import './HeroControls.css';
 
 interface HeroControlsProps {

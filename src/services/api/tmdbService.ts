@@ -22,10 +22,9 @@ let genresCache: Map<number, string> | null = null;
 async function getGenres(language?: string): Promise<Map<number, string>> {
   if (genresCache) return genresCache;
 
-  const response = await apiClient.get<TMDBGenreResponse>(
-    TMDB_ENDPOINTS.GENRES_MOVIE,
-    { language }
-  );
+  const response = await apiClient.get<TMDBGenreResponse>(TMDB_ENDPOINTS.GENRES_MOVIE, {
+    language,
+  });
   const genresMap = new Map<number, string>();
   response.genres.forEach((genre) => genresMap.set(genre.id, genre.name));
   genresCache = genresMap;
@@ -40,7 +39,7 @@ async function fetchMoviesWithDetails(
   endpoint: string,
   params?: Record<string, unknown>,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   const response = await apiClient.get<TMDBListResponse<TMDBMovieResponse>>(endpoint, {
     ...params,
@@ -65,7 +64,7 @@ async function fetchMoviesWithDetails(
 export async function getPopularMovies(
   page = 1,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   return fetchMoviesWithDetails(TMDB_ENDPOINTS.MOVIE_POPULAR, { page }, limit, language);
 }
@@ -73,7 +72,7 @@ export async function getPopularMovies(
 export async function getNowPlayingMovies(
   page = 1,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   return fetchMoviesWithDetails(TMDB_ENDPOINTS.MOVIE_NOW_PLAYING, { page }, limit, language);
 }
@@ -81,7 +80,7 @@ export async function getNowPlayingMovies(
 export async function getUpcomingMovies(
   page = 1,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   return fetchMoviesWithDetails(TMDB_ENDPOINTS.MOVIE_UPCOMING, { page }, limit, language);
 }
@@ -89,13 +88,13 @@ export async function getUpcomingMovies(
 export async function getTrendingMovies(
   timeWindow: 'day' | 'week' = 'week',
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   return fetchMoviesWithDetails(
     TMDB_ENDPOINTS.TRENDING('movie', timeWindow),
     undefined,
     limit,
-    language
+    language,
   );
 }
 
@@ -103,13 +102,13 @@ export async function getMoviesByGenre(
   genreId: number,
   page = 1,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   return fetchMoviesWithDetails(
     TMDB_ENDPOINTS.DISCOVER_MOVIE,
     { with_genres: String(genreId), page },
     limit,
-    language
+    language,
   );
 }
 
@@ -117,11 +116,11 @@ export async function searchMovies(
   query: string,
   page = 1,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   const response = await apiClient.get<TMDBListResponse<TMDBMovieResponse>>(
     TMDB_ENDPOINTS.SEARCH_MOVIE,
-    { query, page, language }
+    { query, page, language },
   );
   const genres = await getGenres(language);
   let movies = mapTMDBMovieListToMovies(response.results, genres);
@@ -132,13 +131,10 @@ export async function searchMovies(
   return enrichedMovies;
 }
 
-export async function getMovieDetails(
-  movieId: number,
-  language?: string
-): Promise<Movie> {
+export async function getMovieDetails(movieId: number, language?: string): Promise<Movie> {
   const response = await apiClient.get<TMDBMovieDetailsResponse>(
     TMDB_ENDPOINTS.MOVIE_DETAILS(movieId),
-    { language }
+    { language },
   );
   return mapTMDBMovieToMovie(response);
 }
@@ -146,13 +142,13 @@ export async function getMovieDetails(
 export async function discoverMovies(
   params: TMDBDiscoverParams,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   return fetchMoviesWithDetails(
     TMDB_ENDPOINTS.DISCOVER_MOVIE,
     { ...params, language } as Record<string, unknown>,
     limit,
-    language
+    language,
   );
 }
 
@@ -183,7 +179,7 @@ export async function getMoviesByTheme(
   theme: MovieTheme,
   page = 1,
   limit?: number,
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   const { source } = theme;
 
@@ -195,7 +191,7 @@ export async function getMoviesByTheme(
         TMDB_ENDPOINTS.MOVIE_POPULAR,
         { page },
         limit,
-        language
+        language,
       );
       break;
 
@@ -204,7 +200,7 @@ export async function getMoviesByTheme(
         TMDB_ENDPOINTS.MOVIE_UPCOMING,
         { page },
         limit,
-        language
+        language,
       );
       break;
 
@@ -213,7 +209,7 @@ export async function getMoviesByTheme(
         TMDB_ENDPOINTS.MOVIE_NOW_PLAYING,
         { page },
         limit,
-        language
+        language,
       );
       break;
 
@@ -222,7 +218,7 @@ export async function getMoviesByTheme(
         TMDB_ENDPOINTS.MOVIE_TOP_RATED,
         { page },
         limit,
-        language
+        language,
       );
       break;
 
@@ -231,7 +227,7 @@ export async function getMoviesByTheme(
         TMDB_ENDPOINTS.TRENDING('movie', source.timeWindow),
         undefined,
         limit,
-        language
+        language,
       );
       break;
 
@@ -246,7 +242,7 @@ export async function getMoviesByTheme(
           'vote_count.gte': 100,
         },
         limit,
-        language
+        language,
       );
       break;
 
@@ -258,7 +254,7 @@ export async function getMoviesByTheme(
         apiClient
           .get<TMDBMovieDetailsResponse>(TMDB_ENDPOINTS.MOVIE_DETAILS(id), { language })
           .then((details) => mapTMDBMovieToMovie(details, genres))
-          .catch(() => null)
+          .catch(() => null),
       );
 
       const results = await Promise.all(moviePromises);
@@ -271,7 +267,7 @@ export async function getMoviesByTheme(
         TMDB_ENDPOINTS.MOVIE_POPULAR,
         { page },
         limit,
-        language
+        language,
       );
   }
 

@@ -1,5 +1,5 @@
 import { useCarousel } from '../../hooks/useCarousel';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import { useTrendingMovies } from '../../hooks/queries/useMovies';
 import './FeaturedMovie.css';
 

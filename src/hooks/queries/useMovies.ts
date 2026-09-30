@@ -11,7 +11,7 @@ import {
 } from '../../services/api/tmdbService';
 import { MOVIE_THEMES, type MovieThemeKey } from '../../constants/movieThemes';
 import { TMDB_LOCALE } from '../../constants/tmdbLanguage';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 
 // ============================================
 // QUERY KEYS (incluem locale para cache por idioma)
@@ -111,11 +111,7 @@ export function useMovieSearch(query: string, page = 1, limit?: number) {
 // HOOK GENÉRICO POR TEMA
 // ============================================
 
-export function useMoviesByTheme(
-  themeKey: MovieThemeKey,
-  page = 1,
-  limit?: number
-) {
+export function useMoviesByTheme(themeKey: MovieThemeKey, page = 1, limit?: number) {
   const { language } = useLanguage();
   const locale = TMDB_LOCALE[language];
   const theme = MOVIE_THEMES[themeKey];

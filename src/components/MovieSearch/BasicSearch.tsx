@@ -1,5 +1,5 @@
 // src/components/MovieSearch/BasicSearch.tsx
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import './MovieSearch.css';
 
 interface BasicSearchProps {

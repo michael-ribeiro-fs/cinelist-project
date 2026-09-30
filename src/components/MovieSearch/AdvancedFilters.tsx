@@ -1,5 +1,5 @@
 // src/components/MovieSearch/AdvancedFilters.tsx
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import type { SearchFilters } from './MovieSearch';
 import './MovieSearch.css';
 

@@ -1,28 +1,30 @@
 // src/utils/logger.ts
+/* eslint-disable no-console */
+
 const isDev = import.meta.env.DEV;
 
 export const logger = {
-  log: (...args: any[]) => {
+  log: (...args: unknown[]) => {
     if (isDev) {
       console.log(...args);
     }
   },
-  error: (...args: any[]) => {
+  error: (...args: unknown[]) => {
     if (isDev) {
       console.error(...args);
     }
   },
-  warn: (...args: any[]) => {
+  warn: (...args: unknown[]) => {
     if (isDev) {
       console.warn(...args);
     }
   },
-  info: (...args: any[]) => {
+  info: (...args: unknown[]) => {
     if (isDev) {
       console.info(...args);
     }
   },
-  group: (...args: any[]) => {
+  group: (...args: unknown[]) => {
     if (isDev) {
       console.group(...args);
     }

@@ -1,7 +1,7 @@
 // src/components/Header/Header.tsx
 import { Link, NavLink } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
-import { useLanguage } from '../../context/LanguageContext';
+import { useLanguage } from '../../context/useLanguage';
 import { logger } from '../../utils/logger';
 import { LANGUAGES, type LanguageCode } from '../../constants/languages';
 import './Header.css';

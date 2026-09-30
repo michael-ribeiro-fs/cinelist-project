@@ -11,7 +11,7 @@ import { TMDB_ENDPOINTS } from '../api/endpoints';
 
 export function mapTMDBMovieToMovie(
   tmdbMovie: TMDBMovieResponse | TMDBMovieDetailsResponse,
-  genresMap?: Map<number, string>
+  genresMap?: Map<number, string>,
 ): Movie {
   const genre = tmdbMovie.genre_ids
     ? tmdbMovie.genre_ids
@@ -27,8 +27,8 @@ export function mapTMDBMovieToMovie(
   const imageUrl = tmdbMovie.backdrop_path
     ? `${env.tmdbImageUrl}${tmdbMovie.backdrop_path}`
     : tmdbMovie.poster_path
-    ? `${env.tmdbImageUrl}${tmdbMovie.poster_path}`
-    : '/placeholder-image.jpg';
+      ? `${env.tmdbImageUrl}${tmdbMovie.poster_path}`
+      : '/placeholder-image.jpg';
 
   const duration = (tmdbMovie as TMDBMovieDetailsResponse).runtime
     ? `${(tmdbMovie as TMDBMovieDetailsResponse).runtime}min`
@@ -52,7 +52,7 @@ export function mapTMDBMovieToMovie(
 
 export function mapTMDBMovieListToMovies(
   tmdbMovies: TMDBMovieResponse[],
-  genresMap?: Map<number, string>
+  genresMap?: Map<number, string>,
 ): Movie[] {
   return tmdbMovies.map((movie) => mapTMDBMovieToMovie(movie, genresMap));
 }
@@ -70,7 +70,7 @@ export function mapTMDBMovieListToMovies(
  */
 export async function enrichMoviesWithRuntime(
   movies: Movie[],
-  language?: string
+  language?: string,
 ): Promise<Movie[]> {
   if (movies.length === 0) return movies;
 
@@ -78,7 +78,7 @@ export async function enrichMoviesWithRuntime(
     apiClient
       .get<TMDBMovieDetailsResponse>(TMDB_ENDPOINTS.MOVIE_DETAILS(movie.id), { language })
       .then((details) => ({ movie, runtime: details.runtime }))
-      .catch(() => ({ movie, runtime: null }))
+      .catch(() => ({ movie, runtime: null })),
   );
 
   const results = await Promise.all(detailsPromises);

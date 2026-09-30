@@ -1,9 +1,5 @@
 // src/services/api/apiClient.ts
-import axios, {
-  type AxiosInstance,
-  type AxiosError,
-  type InternalAxiosRequestConfig
-} from 'axios';
+import axios, { type AxiosInstance, type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { env } from '../../config/env';
 import { logger } from '../../utils/logger';
 
@@ -16,7 +12,7 @@ class ApiClient {
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -40,7 +36,7 @@ class ApiClient {
       (error) => {
         logger.error('❌ [API] Request error:', error);
         return Promise.reject(error);
-      }
+      },
     );
 
     this.instance.interceptors.response.use(
@@ -63,7 +59,7 @@ class ApiClient {
         }
 
         return Promise.reject(error);
-      }
+      },
     );
   }
 
