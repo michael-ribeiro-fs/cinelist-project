@@ -2,8 +2,6 @@
 import type { Movie } from '../../types/movie';
 import type { TMDBMovieResponse, TMDBMovieDetailsResponse } from '../api/types/tmdb.types';
 import { env } from '../../config/env';
-import { apiClient } from '../api/apiClient';
-import { TMDB_ENDPOINTS } from '../api/endpoints';
 
 // ============================================
 // CONSTANTES
@@ -75,36 +73,4 @@ export function mapTMDBMovieListToMovies(
   genresMap?: Map<number, string>,
 ): Movie[] {
   return tmdbMovies.map((movie) => mapTMDBMovieToMovie(movie, genresMap));
-}
-
-// ============================================
-// ENRIQUECIMENTO COM RUNTIME
-// ============================================
-
-/**
- * Busca os detalhes (runtime) para uma lista de filmes.
- * Retorna a lista de filmes com a duração preenchida.
- *
- * @param movies   - Lista de filmes a serem enriquecidos
- * @param language - Código de idioma TMDB (ex: 'pt-BR', 'en-US')
- */
-export async function enrichMoviesWithRuntime(
-  movies: Movie[],
-  language?: string,
-): Promise<Movie[]> {
-  if (movies.length === 0) return movies;
-
-  const detailsPromises = movies.map((movie) =>
-    apiClient
-      .get<TMDBMovieDetailsResponse>(TMDB_ENDPOINTS.MOVIE_DETAILS(movie.id), { language })
-      .then((details) => ({ movie, runtime: details.runtime }))
-      .catch(() => ({ movie, runtime: null })),
-  );
-
-  const results = await Promise.all(detailsPromises);
-
-  return results.map(({ movie, runtime }) => ({
-    ...movie,
-    duration: runtime ? `${runtime}min` : 'Duração não informada',
-  }));
 }

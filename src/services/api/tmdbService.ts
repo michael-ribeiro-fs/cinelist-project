@@ -8,11 +8,7 @@ import type {
   TMDBGenreResponse,
   TMDBDiscoverParams,
 } from './types/tmdb.types';
-import {
-  mapTMDBMovieListToMovies,
-  mapTMDBMovieToMovie,
-  enrichMoviesWithRuntime,
-} from '../mappers/movieMapper';
+import { mapTMDBMovieListToMovies, mapTMDBMovieToMovie } from '../mappers/movieMapper';
 import type { Movie } from '../../types/movie';
 import type { MovieTheme } from '../../constants/movieThemes';
 import { CURATED_LISTS } from '../../data/curatedLists';
@@ -32,7 +28,8 @@ async function getGenres(language?: string): Promise<Map<number, string>> {
 }
 
 // ============================================
-// FUNÇÃO AUXILIAR PARA BUSCAR LISTA + ENRIQUECER COM RUNTIME
+// FUNÇÃO AUXILIAR PARA BUSCAR LISTA
+// (runtime é enriquecido APENAS em getMovieDetails)
 // ============================================
 
 async function fetchMoviesWithDetails(
@@ -53,12 +50,11 @@ async function fetchMoviesWithDetails(
     movies = movies.slice(0, limit);
   }
 
-  const enrichedMovies = await enrichMoviesWithRuntime(movies, language);
-  return enrichedMovies;
+  return movies;
 }
 
 // ============================================
-// FUNÇÕES PÚBLICAS (com limite e idioma opcionais)
+// FUNÇÕES PÚBLICAS
 // ============================================
 
 export async function getPopularMovies(
@@ -127,8 +123,7 @@ export async function searchMovies(
   if (limit && limit > 0) {
     movies = movies.slice(0, limit);
   }
-  const enrichedMovies = await enrichMoviesWithRuntime(movies, language);
-  return enrichedMovies;
+  return movies;
 }
 
 export async function getMovieDetails(movieId: number, language?: string): Promise<Movie> {
@@ -157,24 +152,9 @@ export function clearGenresCache(): void {
 }
 
 // ============================================
-// FUNÇÃO GENÉRICA POR TEMA (OTIMIZADA)
+// FUNÇÃO GENÉRICA POR TEMA
 // ============================================
 
-/**
- * Busca filmes de acordo com o tema especificado.
- *
- * Estratégia de otimização:
- * 1. Para temas de gênero, usa `sort_by=vote_average.desc` e `vote_count.gte=100`
- *    para trazer os filmes mais bem avaliados diretamente da API.
- * 2. Para todos os temas, aplica uma ordenação final no cliente por rating
- *    decrescente, garantindo consistência.
- * 3. Aceita um parâmetro `language` que traduz títulos, sinopses e gêneros.
- *
- * @param theme    - O tema do filme (definido em `movieThemes.ts`)
- * @param page     - Página de resultados (padrão: 1)
- * @param limit    - Limite de filmes retornados (padrão: sem limite)
- * @param language - Código de idioma TMDB (ex: 'pt-BR', 'en-US')
- */
 export async function getMoviesByTheme(
   theme: MovieTheme,
   page = 1,
@@ -232,7 +212,6 @@ export async function getMoviesByTheme(
       break;
 
     case 'genre':
-      // 🔥 Ordenação via API: melhor avaliados com pelo menos 100 votos
       movies = await fetchMoviesWithDetails(
         TMDB_ENDPOINTS.DISCOVER_MOVIE,
         {
@@ -271,6 +250,5 @@ export async function getMoviesByTheme(
       );
   }
 
-  // 🔥 Ordenação final no cliente
   return [...movies].sort((a, b) => b.rating - a.rating);
 }
