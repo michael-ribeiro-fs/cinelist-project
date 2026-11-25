@@ -9,10 +9,10 @@ export const register = {
     emailPlaceholder: 'Digite seu e-mail',
     submit: 'Cadastrar',
     or: 'ou',
-    google: 'Entrar com Google',
+    google: 'Continuar com Google',
     infoTitle: 'Junte-se a nós',
     infoText:
-      'Cadastre-se em nossa plataforma e tenha acesso a downloads diários sem restrições. Se já possui cadastro, clique em "Entrar" para acessar sua conta.',
+      'Crie sua conta no CineList e comece a montar suas listas, favoritar filmes e séries e descobrir novos títulos personalizados para você. Se já tem conta, clique em "Entrar" para acessar.',
   },
   en: {
     title: 'Sign up',
@@ -24,10 +24,10 @@ export const register = {
     emailPlaceholder: 'Enter your email',
     submit: 'Sign up',
     or: 'or',
-    google: 'Sign in with Google',
+    google: 'Continue with Google',
     infoTitle: 'Join us',
     infoText:
-      'Sign up to our platform and get unlimited daily downloads. If you already have an account, click "Login" to access your page.',
+      'Create your CineList account and start building your lists, favoriting movies and series, and discovering new titles. If you already have an account, click "Login" to sign in.',
   },
   es: {
     title: 'Regístrate',
@@ -39,10 +39,10 @@ export const register = {
     emailPlaceholder: 'Ingresa tu correo',
     submit: 'Registrarse',
     or: 'o',
-    google: 'Iniciar sesión con Google',
+    google: 'Continuar con Google',
     infoTitle: 'Únete a nosotros',
     infoText:
-      'Regístrate en nuestra plataforma y obtén descargas diarias sin restricciones. Si ya tienes cuenta, haz clic en "Entrar" para acceder.',
+      'Crea tu cuenta de CineList y empieza a crear tus listas, marcar películas y series como favoritas y descubrir nuevos títulos. Si ya tienes cuenta, haz clic en "Entrar" para acceder.',
   },
   fr: {
     title: "S'inscrire",
@@ -54,10 +54,10 @@ export const register = {
     emailPlaceholder: 'Entrez votre e-mail',
     submit: "S'inscrire",
     or: 'ou',
-    google: 'Se connecter avec Google',
+    google: 'Continuer avec Google',
     infoTitle: 'Rejoignez-nous',
     infoText:
-      "Inscrivez-vous sur notre plateforme et bénéficiez de téléchargements quotidiens sans restriction. Si vous avez déjà un compte, cliquez sur 'Se connecter' pour accéder à votre page.",
+      "Créez votre compte CineList et commencez à créer vos listes, ajouter des films et séries à vos favoris, et découvrir de nouveaux titres. Si vous avez déjà un compte, cliquez sur 'Se connecter' pour accéder.",
   },
   zh: {
     title: '注册',
@@ -69,9 +69,10 @@ export const register = {
     emailPlaceholder: '请输入您的电子邮箱',
     submit: '注册',
     or: '或',
-    google: '使用Google登录',
+    google: '使用 Google 继续',
     infoTitle: '加入我们',
-    infoText: '注册我们的平台，享受每日无限下载。如果您已有账户，请点击"登录"进入您的页面。',
+    infoText:
+      '创建您的 CineList 账户，开始建立您的清单、收藏电影和剧集，并发现新作品。如果您已有账户，请点击"登录"进入。',
   },
   ar: {
     title: 'تسجيل',
@@ -83,10 +84,10 @@ export const register = {
     emailPlaceholder: 'أدخل بريدك الإلكتروني',
     submit: 'تسجيل',
     or: 'أو',
-    google: 'تسجيل الدخول عبر جوجل',
+    google: 'المتابعة باستخدام Google',
     infoTitle: 'انضم إلينا',
     infoText:
-      'سجل في منصتنا وتمتع بتحميلات يومية غير محدودة. إذا كان لديك حساب بالفعل، انقر على "تسجيل الدخول" للوصول إلى صفحتك.',
+      'أنشئ حسابك في CineList وابدأ في إنشاء قوائمك وإضافة الأفلام والمسلسلات إلى المفضلة واكتشاف أعمال جديدة. إذا كان لديك حساب بالفعل، انقر على "تسجيل الدخول" للوصول.',
   },
   ru: {
     title: 'Регистрация',
@@ -98,10 +99,10 @@ export const register = {
     emailPlaceholder: 'Введите вашу электронную почту',
     submit: 'Зарегистрироваться',
     or: 'или',
-    google: 'Войти через Google',
+    google: 'Продолжить с Google',
     infoTitle: 'Присоединяйтесь к нам',
     infoText:
-      'Зарегистрируйтесь на нашей платформе и получайте ежедневные загрузки без ограничений. Если у вас уже есть аккаунт, нажмите "Войти" для доступа.',
+      'Создайте аккаунт CineList и начните создавать свои списки, добавлять фильмы и сериалы в избранное и открывать для себя новые произведения. Если у вас уже есть аккаунт, нажмите "Войти" для входа.',
   },
   hi: {
     title: 'साइन अप',
@@ -113,9 +114,9 @@ export const register = {
     emailPlaceholder: 'अपना ईमेल दर्ज करें',
     submit: 'साइन अप',
     or: 'या',
-    google: 'Google के साथ साइन इन करें',
+    google: 'Google के साथ जारी रखें',
     infoTitle: 'हमसे जुड़ें',
     infoText:
-      'हमारे प्लेटफ़ॉर्म पर साइन अप करें और बिना किसी प्रतिबंध के दैनिक डाउनलोड का आनंद लें। यदि आपके पास पहले से खाता है, तो अपने पेज तक पहुँचने के लिए "लॉगिन" पर क्लिक करें।',
+      'अपना CineList खाता बनाएं और अपनी सूचियाँ बनाना, फ़िल्मों और सीरीज़ को पसंदीदा में जोड़ना और नई सामग्री खोजना शुरू करें। यदि आपके पास पहले से खाता है, तो साइन इन करने के लिए "लॉगिन" पर क्लिक करें।',
   },
 };
