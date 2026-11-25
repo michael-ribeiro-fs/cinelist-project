@@ -29,7 +29,7 @@ export function useCarousel({ total, interval = 60000, autoPlay = true }: UseCar
 
   // Autoplay
   useEffect(() => {
-    if (!autoPlay || !interval || isPaused || total === 0) return;
+    if (!autoPlay || !interval || isPaused || total === 0) return undefined;
 
     const timer = setInterval(() => {
       next();
