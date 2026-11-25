@@ -57,6 +57,7 @@ export function mapTMDBMovieToMovie(
     title: tmdbMovie.title,
     year,
     image: imageUrl,
+    backdropImage: null,
     description: tmdbMovie.overview || 'Sinopse não disponível',
     genre: genre || 'Gênero não disponível',
     rating: tmdbMovie.vote_average || 0,
