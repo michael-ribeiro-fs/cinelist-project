@@ -1,6 +1,6 @@
 export const header = {
   pt: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'Home',
       movies: 'Filmes',
@@ -13,7 +13,7 @@ export const header = {
     signup: 'Criar conta',
   },
   en: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'Home',
       movies: 'Movies',
@@ -26,7 +26,7 @@ export const header = {
     signup: 'Sign up',
   },
   es: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'Inicio',
       movies: 'Películas',
@@ -39,7 +39,7 @@ export const header = {
     signup: 'Registrarse',
   },
   fr: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'Accueil',
       movies: 'Films',
@@ -52,7 +52,7 @@ export const header = {
     signup: "S'inscrire",
   },
   zh: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: '首页',
       movies: '电影',
@@ -65,7 +65,7 @@ export const header = {
     signup: '注册',
   },
   ar: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'الرئيسية',
       movies: 'أفلام',
@@ -78,7 +78,7 @@ export const header = {
     signup: 'اشتراك',
   },
   ru: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'Главная',
       movies: 'Фильмы',
@@ -91,7 +91,7 @@ export const header = {
     signup: 'Зарегистрироваться',
   },
   hi: {
-    brand: 'MovieList',
+    brand: 'CineList',
     menu: {
       home: 'होम',
       movies: 'फिल्में',
