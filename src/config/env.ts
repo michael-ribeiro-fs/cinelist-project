@@ -8,7 +8,6 @@ interface EnvConfig {
   tmdbImageOriginal: string;
   isDevelopment: boolean;
   isProduction: boolean;
-  useApi: boolean;
 }
 
 function getEnvVariable(key: string, required = true): string {
@@ -27,5 +26,4 @@ export const env: EnvConfig = {
   tmdbImageOriginal: getEnvVariable('VITE_TMDB_IMAGE_ORIGINAL'),
   isDevelopment: import.meta.env.DEV,
   isProduction: import.meta.env.PROD,
-  useApi: import.meta.env.VITE_USE_API === 'true',
 } as const;
