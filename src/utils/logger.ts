@@ -1,5 +1,4 @@
 // src/utils/logger.ts
-/* eslint-disable no-console */
 
 const isDev = import.meta.env.DEV;
 
