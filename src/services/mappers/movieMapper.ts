@@ -6,6 +6,30 @@ import { apiClient } from '../api/apiClient';
 import { TMDB_ENDPOINTS } from '../api/endpoints';
 
 // ============================================
+// CONSTANTES
+// ============================================
+
+const PLACEHOLDER_IMAGE = '/placeholder-image.jpg';
+
+// ============================================
+// HELPERS
+// ============================================
+
+/**
+ * Resolve a URL de imagem a partir dos paths da TMDB.
+ * Prefere backdrop (16:9) sobre poster (2:3). Fallback para placeholder local.
+ */
+function resolveImageUrl(backdropPath: string | null, posterPath: string | null): string {
+  if (backdropPath) {
+    return `${env.tmdbImageUrl}${backdropPath}`;
+  }
+  if (posterPath) {
+    return `${env.tmdbImageUrl}${posterPath}`;
+  }
+  return PLACEHOLDER_IMAGE;
+}
+
+// ============================================
 // MAPEAMENTO DE UM ÚNICO FILME
 // ============================================
 
@@ -24,11 +48,7 @@ export function mapTMDBMovieToMovie(
     ? new Date(tmdbMovie.release_date).getFullYear()
     : new Date().getFullYear();
 
-  const imageUrl = tmdbMovie.backdrop_path
-    ? `${env.tmdbImageUrl}${tmdbMovie.backdrop_path}`
-    : tmdbMovie.poster_path
-      ? `${env.tmdbImageUrl}${tmdbMovie.poster_path}`
-      : '/placeholder-image.jpg';
+  const imageUrl = resolveImageUrl(tmdbMovie.backdrop_path, tmdbMovie.poster_path);
 
   const duration = (tmdbMovie as TMDBMovieDetailsResponse).runtime
     ? `${(tmdbMovie as TMDBMovieDetailsResponse).runtime}min`
