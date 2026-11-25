@@ -28,6 +28,28 @@ async function getGenres(language?: string): Promise<Map<number, string>> {
 }
 
 // ============================================
+// HELPER: CONCORRÊNCIA LIMITADA
+// ============================================
+
+/**
+ * Executa promises em chunks de `limit`, evitando saturar a API
+ * em listas grandes (ex: curated lists com 20+ IDs).
+ */
+async function mapWithConcurrency<T, R>(
+  items: T[],
+  limit: number,
+  mapper: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = [];
+  for (let i = 0; i < items.length; i += limit) {
+    const chunk = items.slice(i, i + limit);
+    const chunkResults = await Promise.all(chunk.map(mapper));
+    results.push(...chunkResults);
+  }
+  return results;
+}
+
+// ============================================
 // FUNÇÃO AUXILIAR PARA BUSCAR LISTA
 // (runtime é enriquecido APENAS em getMovieDetails)
 // ============================================
@@ -229,14 +251,13 @@ export async function getMoviesByTheme(
       const list = CURATED_LISTS[source.listId];
       const genres = await getGenres(language);
 
-      const moviePromises = list.movieIds.map((id) =>
+      const results = await mapWithConcurrency(list.movieIds, 5, (id) =>
         apiClient
           .get<TMDBMovieDetailsResponse>(TMDB_ENDPOINTS.MOVIE_DETAILS(id), { language })
           .then((details) => mapTMDBMovieToMovie(details, genres))
           .catch(() => null),
       );
 
-      const results = await Promise.all(moviePromises);
       movies = results.filter((m): m is Movie => m !== null);
       break;
     }
