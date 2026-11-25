@@ -82,7 +82,11 @@ function Hero() {
       tabIndex={0}
     >
       <div className="hero__background">
-        <img className="hero__background-image" src={activeMovie.image} alt="" />
+        <img
+          className="hero__background-image"
+          src={activeMovie.backdropImage ?? activeMovie.image}
+          alt=""
+        />
       </div>
 
       <div className="hero__overlay" />
