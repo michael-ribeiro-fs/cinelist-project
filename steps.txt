@@ -1,0 +1,6 @@
+
+Próximos passos:
+
+# Consertar footer;
+# corrijir links;
+# Criar popup de consentimento;
