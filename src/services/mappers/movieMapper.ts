@@ -13,18 +13,12 @@ const PLACEHOLDER_IMAGE = '/placeholder-image.jpg';
 // HELPERS
 // ============================================
 
-/**
- * Resolve a URL de imagem a partir dos paths da TMDB.
- * Prefere backdrop (16:9) sobre poster (2:3). Fallback para placeholder local.
- */
-function resolveImageUrl(backdropPath: string | null, posterPath: string | null): string {
-  if (backdropPath) {
-    return `${env.tmdbImageUrl}${backdropPath}`;
-  }
-  if (posterPath) {
-    return `${env.tmdbImageUrl}${posterPath}`;
-  }
-  return PLACEHOLDER_IMAGE;
+function buildPosterUrl(posterPath: string | null): string {
+  return posterPath ? `${env.tmdbImageUrl}${posterPath}` : PLACEHOLDER_IMAGE;
+}
+
+function buildBackdropUrl(backdropPath: string | null): string | null {
+  return backdropPath ? `${env.tmdbImageUrl}${backdropPath}` : null;
 }
 
 // ============================================
@@ -46,8 +40,6 @@ export function mapTMDBMovieToMovie(
     ? new Date(tmdbMovie.release_date).getFullYear()
     : new Date().getFullYear();
 
-  const imageUrl = resolveImageUrl(tmdbMovie.backdrop_path, tmdbMovie.poster_path);
-
   const duration = (tmdbMovie as TMDBMovieDetailsResponse).runtime
     ? `${(tmdbMovie as TMDBMovieDetailsResponse).runtime}min`
     : null;
@@ -56,8 +48,8 @@ export function mapTMDBMovieToMovie(
     id: tmdbMovie.id,
     title: tmdbMovie.title,
     year,
-    image: imageUrl,
-    backdropImage: null,
+    image: buildPosterUrl(tmdbMovie.poster_path),
+    backdropImage: buildBackdropUrl(tmdbMovie.backdrop_path),
     description: tmdbMovie.overview || 'Sinopse não disponível',
     genre: genre || 'Gênero não disponível',
     rating: tmdbMovie.vote_average || 0,
