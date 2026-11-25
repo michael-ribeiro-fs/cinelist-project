@@ -72,7 +72,7 @@ function Header({ onSearch }: HeaderProps) {
   return (
     <header className="header">
       <div className="header__container">
-        <Link className="header__brand" to="/" aria-label="MovieList - Página inicial">
+        <Link className="header__brand" to="/" aria-label="CineList - Página inicial">
           <span className="header__brand-mark" />
           <span className="header__brand-text">{t.header.brand}</span>
         </Link>
