@@ -58,13 +58,14 @@ function MovieGrid({ movies = moviesData.movies, title = 'Filmes' }: MovieGridPr
                       <span className="movie-card__rating-value">{movie.rating}</span>
                     </span>
 
-                    <span className="movie-card__duration">
-                      <span className="movie-card__duration-icon" aria-hidden="true">
-                        ◷
+                    {movie.duration && (
+                      <span className="movie-card__duration">
+                        <span className="movie-card__duration-icon" aria-hidden="true">
+                          ◷
+                        </span>
+                        <span className="movie-card__duration-value">{movie.duration}</span>
                       </span>
-
-                      <span className="movie-card__duration-value">{movie.duration}</span>
-                    </span>
+                    )}
                   </div>
 
                   <h2 className="movie-card__title" title={movie.title}>

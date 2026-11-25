@@ -50,7 +50,7 @@ export function mapTMDBMovieToMovie(
 
   const duration = (tmdbMovie as TMDBMovieDetailsResponse).runtime
     ? `${(tmdbMovie as TMDBMovieDetailsResponse).runtime}min`
-    : '';
+    : null;
 
   return {
     id: tmdbMovie.id,

@@ -162,22 +162,24 @@ function MovieCarousel({ theme, title, movies: externalMovies, limit }: MovieCar
                       {movie.rating.toFixed(1)}
                     </span>
                   </div>
-                  <div className="movie-carousel__duration">
-                    <svg
-                      className="movie-carousel__duration-icon"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <circle
-                        className="movie-carousel__duration-icon-circle"
-                        cx="12"
-                        cy="12"
-                        r="8"
-                      />
-                      <path className="movie-carousel__duration-icon-path" d="M12 7V12L15 15" />
-                    </svg>
-                    <span className="movie-carousel__metadata-value">{movie.duration}</span>
-                  </div>
+                  {movie.duration && (
+                    <div className="movie-carousel__duration">
+                      <svg
+                        className="movie-carousel__duration-icon"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <circle
+                          className="movie-carousel__duration-icon-circle"
+                          cx="12"
+                          cy="12"
+                          r="8"
+                        />
+                        <path className="movie-carousel__duration-icon-path" d="M12 7V12L15 15" />
+                      </svg>
+                      <span className="movie-carousel__metadata-value">{movie.duration}</span>
+                    </div>
+                  )}
                 </div>
                 <h3 className="movie-carousel__movie-title">{movie.title}</h3>
               </div>
